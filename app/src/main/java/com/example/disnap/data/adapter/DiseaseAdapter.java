@@ -1,5 +1,6 @@
 package com.example.disnap.data.adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,8 @@ import com.example.disnap.data.pojo.Disease;
 import com.example.disnap.ui.home.HomeContract;
 
 import java.util.ArrayList;
+
+import static com.yalantis.ucrop.UCropFragment.TAG;
 
 public class DiseaseAdapter extends RecyclerView.Adapter<DiseaseAdapter.ViewHolder> {
 
@@ -40,7 +43,7 @@ public class DiseaseAdapter extends RecyclerView.Adapter<DiseaseAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         holder.mItem = mDisease.get(position);
 
         holder.name.setText(mDisease.get(position).getDiseaseName());
@@ -50,12 +53,14 @@ public class DiseaseAdapter extends RecyclerView.Adapter<DiseaseAdapter.ViewHold
                 .load(mDisease.get(position).getDiseaseImage())
                 .into(holder.img);
 
-        holder.nView.setOnClickListener(new View.OnClickListener() {
+        holder.img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(TAG, "onClick: " + mDisease.get(position).getDiseaseName());
                 onItemClickListener.clickItem(holder.mItem);
             }
         });
+
     }
 
     @Override

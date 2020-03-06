@@ -14,7 +14,6 @@
         android:layout_marginLeft="@dimen/_18sdp"
         android:layout_marginRight="@dimen/_18sdp"
         android:clickable="true"
-        android:focusable="true"
         app:cardCornerRadius="@dimen/_10sdp">
 
         <ImageView

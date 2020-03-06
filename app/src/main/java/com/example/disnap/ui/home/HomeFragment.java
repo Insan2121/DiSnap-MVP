@@ -1,23 +1,27 @@
 package com.example.disnap.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.disnap.R;
 import com.example.disnap.data.adapter.DiseaseAdapter;
-import com.example.disnap.data.adapter.DiseaseInfoAdapter;
 import com.example.disnap.data.pojo.Disease;
 import com.example.disnap.ui.base.BaseFragment;
+import com.example.disnap.ui.detaildiseaseInfo.DetailDiseaseInfoActivity;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.util.ArrayList;
+
+import static com.yalantis.ucrop.UCropFragment.TAG;
 
 public class HomeFragment extends BaseFragment implements HomeContract.View, HomeContract.OnItemClickListener {
 
@@ -109,8 +113,17 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Hom
     }
 
     @Override
-    public void clickItem(Disease disease) {
+    public void showDetailDiseaseInfoActivity(Disease disease) {
+        Intent intent = new Intent(getContext(), DetailDiseaseInfoActivity.class);
+        intent.putExtra("Data", disease);
+        startActivity(intent);
+    }
 
+
+    @Override
+    public void clickItem(Disease disease) {
+        Log.d(TAG, "clickItem: "+disease.getDiseaseName());
+        presenter.openDetailDiseaseInfoActivity(disease);
     }
 
     @Override

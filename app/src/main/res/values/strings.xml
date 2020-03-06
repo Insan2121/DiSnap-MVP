@@ -8,4 +8,18 @@
     <string name="image_of_a_disease_in_the_chili_plant">image of a disease in the chili plant</string>
     <string name="title">Title</string>
     <string name="latin">Latin</string>
+    <string name="title_request">Permissions Required</string>
+    <string name="message_request">Permission is required for using this app. Please enable them in app settings.</string>
+    <string name="go_to_setting">Go to setting</string>
+    <string name="cancel">Cancel</string>
+    <string name="toas_device_doesnt_have_camera">This device does not have a camera.</string>
+    <string name="open_setting_to_accept_permission">Open setting to accepted permission</string>
+    <string name="gallery_clicked">Gallery clicked</string>
+    <string name="button_back">button_back</string>
+    <string name="title_detail">Detail</string>
+    <string name="title_apps_home">Disease Snap</string>
+    <string name="logo_apps">logo apps</string>
+    <string name="text_indication">Gejala</string>
+    <string name="text_pesticide">Pestisida</string>
+    <string name="text_control">Pengendalian</string>
 </resources>

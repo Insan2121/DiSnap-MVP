@@ -1,6 +1,9 @@
 package com.example.disnap.data.pojo;
 
-public class Disease {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Disease implements Parcelable {
     /*@Expose
    @SerializedName("diseaseImage") */
     private String diseaseImage;
@@ -22,6 +25,7 @@ public class Disease {
         this.indication = indication;
         this.control = control;
     }
+
 
     public String getDiseaseImage() {
         return diseaseImage;
@@ -70,4 +74,42 @@ public class Disease {
     public void setControl(String control) {
         this.control = control;
     }
+
+    protected Disease(Parcel in) {
+        diseaseImage = in.readString();
+        diseaseName = in.readString();
+        diseaseLatin = in.readString();
+        pesticide = in.readString();
+        indication = in.readString();
+        control = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(diseaseImage);
+        dest.writeString(diseaseName);
+        dest.writeString(diseaseLatin);
+        dest.writeString(pesticide);
+        dest.writeString(indication);
+        dest.writeString(control);
+    }
+
+    public static final Creator<Disease> CREATOR = new Creator<Disease>() {
+        @Override
+        public Disease createFromParcel(Parcel in) {
+            return new Disease(in);
+        }
+
+        @Override
+        public Disease[] newArray(int size) {
+            return new Disease[size];
+        }
+    };
+
+
 }

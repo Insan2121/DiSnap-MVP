@@ -9,12 +9,14 @@ import java.util.ArrayList;
 public interface HomeContract {
     interface Presenter extends BasePresenter {
         void populateDiseaseInfo();
+        void openDetailDiseaseInfoActivity(Disease disease);
     }
 
     interface View extends BaseView<HomeContract.Presenter> {
         void setDiseaseInfo(ArrayList<Disease> diseaseInfo);
-        public void showProgress();
-        public void hideProgress();
+        void showProgress();
+        void hideProgress();
+        void showDetailDiseaseInfoActivity(Disease disease);
     }
 
     interface OnItemClickListener {

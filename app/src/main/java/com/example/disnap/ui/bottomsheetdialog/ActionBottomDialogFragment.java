@@ -24,6 +24,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.disnap.R;
+import com.example.disnap.ui.utils.Constants;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -45,8 +46,7 @@ import es.dmoral.toasty.Toasty;
  */
 public class ActionBottomDialogFragment extends BottomSheetDialogFragment implements View.OnClickListener {
 
-    private static final int CAMERA_REQUEST = 1000;
-    private static final int GALERY_REQUEST = 2000;
+
 
     public ActionBottomDialogFragment() {
         // Required empty public constructor
@@ -82,7 +82,7 @@ public class ActionBottomDialogFragment extends BottomSheetDialogFragment implem
                 checkIfAnyCamera();
                 break;
             case R.id.viewGallery:
-                Toast.makeText(getContext(), "Gallery clicked", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getResources().getString(R.string.gallery_clicked), Toast.LENGTH_SHORT).show();
                 galleryPermission();
                 break;
         }
@@ -118,7 +118,7 @@ public class ActionBottomDialogFragment extends BottomSheetDialogFragment implem
 
                     @Override
                     public void onPermissionDenied(PermissionDeniedResponse response) {
-                        Toasty.warning(Objects.requireNonNull(getContext()), "Open setting to accepted permission", Toasty.LENGTH_SHORT).show();
+                        Toasty.warning(Objects.requireNonNull(getContext()), getResources().getString(R.string.open_setting_to_accept_permission), Toasty.LENGTH_SHORT).show();
                         openSettingsDialog();
                     }
 
@@ -135,7 +135,7 @@ public class ActionBottomDialogFragment extends BottomSheetDialogFragment implem
         assert context != null;
         PackageManager packageManager = context.getPackageManager();
         if (!packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)) {
-            Toast.makeText(getActivity(), "This device does not have a camera.", Toast.LENGTH_SHORT)
+            Toast.makeText(getActivity(), getResources().getString(R.string.toas_device_doesnt_have_camera), Toast.LENGTH_SHORT)
                     .show();
         } else {
             cameraPermission();
@@ -146,7 +146,7 @@ public class ActionBottomDialogFragment extends BottomSheetDialogFragment implem
     private void openCamera() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(Objects.requireNonNull(getContext()).getPackageManager()) != null) {
-            Objects.requireNonNull(getActivity()).startActivityForResult(takePictureIntent, CAMERA_REQUEST);
+            Objects.requireNonNull(getActivity()).startActivityForResult(takePictureIntent, Constants.CAMERA_REQUEST);
         }
     }
 
@@ -159,22 +159,22 @@ public class ActionBottomDialogFragment extends BottomSheetDialogFragment implem
 
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
-        Objects.requireNonNull(getActivity()).startActivityForResult(intent, GALERY_REQUEST);
-        Log.d("statusReqFromFrag  : ", Integer.toString(GALERY_REQUEST));
+        Objects.requireNonNull(getActivity()).startActivityForResult(intent, Constants.GALERY_REQUEST);
+        Log.d("statusReqFromFrag  : ", Integer.toString(Constants.GALERY_REQUEST));
     }
 
     //fungsi untuk popup permission
     private void openSettingsDialog() {
-        new AlertDialog.Builder(getContext()).setTitle("Permissions Required")
-                .setMessage("Permission is required for using this app. Please enable them in app settings.")
-                .setPositiveButton("Go to setting", new DialogInterface.OnClickListener() {
+        new AlertDialog.Builder(getContext()).setTitle(getResources().getString(R.string.title_request))
+                .setMessage(getResources().getString(R.string.message_request))
+                .setPositiveButton(getResources().getString(R.string.go_to_setting), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         showsettings();
                     }
                 })
-                .setNegativeButton("Cancel", null)
+                .setNegativeButton(getResources().getString(R.string.cancel), null)
                 .show();
     }
 

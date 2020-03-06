@@ -4,15 +4,12 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.disnap.data.pojo.Disease;
-import com.example.disnap.ui.base.BasePresenter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-
-import io.isfaaghyth.rak.Rak;
 import men.ngopi.zain.jsonloaderlibrary.JSONLoader;
 import men.ngopi.zain.jsonloaderlibrary.JSONObjectLoaderListener;
 
@@ -21,7 +18,7 @@ public class HomePresenter implements HomeContract.Presenter {
     private final HomeContract.View mView;
     private Context context;
 
-    public HomePresenter(HomeContract.View mView, Context context) {
+    HomePresenter(HomeContract.View mView, Context context) {
         this.mView = mView;
         this.context = context;
     }
@@ -60,7 +57,12 @@ public class HomePresenter implements HomeContract.Presenter {
                 });
     }
 
-    ArrayList<Disease> insertData(JSONObject jsonObject, String jenis) throws JSONException {
+    @Override
+    public void openDetailDiseaseInfoActivity(Disease disease) {
+        mView.showDetailDiseaseInfoActivity(disease);
+    }
+
+    private ArrayList<Disease> insertData(JSONObject jsonObject, String jenis) throws JSONException {
         ArrayList<Disease> arrayList = new ArrayList<>();
         try {
             JSONArray jsonArray = jsonObject.getJSONArray(jenis);

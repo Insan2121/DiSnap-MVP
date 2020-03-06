@@ -4,21 +4,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="@dimen/_10sdp"
-    tools:context=".ui.pesticide.PesticideFragment">
+    tools:context=".ui.control.ControlFragment">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_10sdp">
         <TextView
-            android:id="@+id/tv_pesticide"
+            android:id="@+id/tv_control"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_15sdp"
             android:layout_marginEnd="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:textSize="@dimen/_12ssp"
-            android:text="@string/text_pesticide" />
-
+            android:text="@string/text_control" />
     </ScrollView>
 
 </FrameLayout>
