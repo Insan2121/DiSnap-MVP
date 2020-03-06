@@ -1,114 +1,95 @@
-package com.example.disnap;
+package com.example.disnap.ui.analyze;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.androidnetworking.AndroidNetworking;
-import com.example.disnap.ui.analyze.AnalyzeActivity;
-import com.example.disnap.ui.bottomsheetdialog.ActionBottomDialogFragment;
+import com.bumptech.glide.Glide;
+import com.example.disnap.MainActivity;
+import com.example.disnap.R;
 import com.example.disnap.ui.base.BaseActivity;
-import com.example.disnap.ui.history.HistoryFragment;
-import com.example.disnap.ui.home.HomeFragment;
-import com.example.disnap.ui.snap.SnapFragment;
+import com.example.disnap.ui.bottomsheetdialog.ActionBottomDialogFragment;
 import com.example.disnap.util.Constants;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import io.isfaaghyth.rak.Rak;
-
-public class MainActivity extends BaseActivity {
-    private static final String TAG = MainActivity.class.getSimpleName();
-    public static int selectedMenuId;
-    private static Context context;
-    private static MainActivity mainActivity;
-    private androidx.fragment.app.Fragment home, history;
-    private static BottomNavigationView bottomNavigationView;
-    private static Fragment selectedFragment;
-    private static FragmentTransaction fragmentTransaction;
-    private SnapFragment snapFragment;
+public class AnalyzeActivity extends BaseActivity {
+    private ImageView btnBack;
+    private ImageView btnCamera;
+    private Button btnAnalyze;
+    private ImageView imageUser;
     private static ActionBottomDialogFragment fragment = new ActionBottomDialogFragment();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        Rak.initialize(getApplicationContext());
-        AndroidNetworking.initialize(getApplicationContext());
-
+        setContentView(R.layout.activity_analyze);
         findViews();
         initViews();
         initListeners();
-        bottomNavigationView.setSelectedItemId(R.id.menu_home);
+
+        Intent intent = getIntent();
+        if (intent != null){
+            String img = intent.getStringExtra("imageUri");
+            Log.d("epe100", "onCreate: "+img);
+            Glide.with(getApplicationContext())
+                    .asBitmap()
+                    .load(img)
+                    .into(imageUser);
+        }else {
+            Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
     public void findViews() {
-        bottomNavigationView = findViewById(R.id.bottomNavigation);
-        bottomNavigationView.setSelectedItemId(R.id.menu_home);
+        btnBack = findViewById(R.id.btn_back_analyze);
+        btnCamera = findViewById(R.id.btn_new_image);
+        btnAnalyze = findViewById(R.id.button_analyze);
+        imageUser = findViewById(R.id.img_user);
     }
 
     @Override
     public void initViews() {
-        home = new HomeFragment();
-        history = new HistoryFragment();
-        snapFragment = new SnapFragment();
-        bottomNavigationView.setSelectedItemId(R.id.menu_home);
+
     }
 
     @Override
     public void initListeners() {
-        selectedMenuId = R.id.menu_home;
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId()){
-                    case R.id.menu_home:
-                        selectedFragment = home;
-                        break;
-                    case R.id.menu_snap:
-                       // showBottomSheet();
-                        //showBottomSheetFragment();
-                        selectedFragment = snapFragment;
-                        showBottomSheetFragment();
-                        //selectedFragment = snapFragment;
-                        //showBottomSheet();
+            public void onClick(View v) {
+                startActivity(new Intent(AnalyzeActivity.this, MainActivity.class));
+            }
+        });
 
-                        break;
-                    case R.id.menu_history:
-                        selectedFragment = history;
-                        break;
-                }
-                selectedMenuId  = menuItem.getItemId();
-                fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.container, selectedFragment);
-                fragmentTransaction.commit();
-                return true;
+        btnCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showBottomSheetFragment();
+            }
+        });
+
+        btnAnalyze.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }
-
 
     public void showBottomSheetFragment(){
         fragment.show(getSupportFragmentManager(), fragment.getTag());
@@ -130,7 +111,7 @@ public class MainActivity extends BaseActivity {
             }else if (requestCode == Constants.CAMERA_REQUEST){
                 Log.d("epe4",requestCode+"");
                 Uri a = data.getData();
-                //Log.d("epe5",a.toString());
+                Log.d("epe5",a.toString());
                 startCrop(a);
             } else if (requestCode == Constants.CROP_REQUEST) {
                 Log.d("epe6",requestCode+"");
@@ -168,7 +149,7 @@ public class MainActivity extends BaseActivity {
         UCrop uCrop = UCrop.of(uri, Uri.fromFile(new File(getApplicationContext().getCacheDir(), imageFileName)));
         uCrop.withAspectRatio(1,1);
         uCrop.withMaxResultSize(450, 450);
-        uCrop.start(MainActivity.this, Constants.CROP_REQUEST);
+        uCrop.start(AnalyzeActivity.this, Constants.CROP_REQUEST);
         Log.d("apa?", "crop ok");
     }
 }

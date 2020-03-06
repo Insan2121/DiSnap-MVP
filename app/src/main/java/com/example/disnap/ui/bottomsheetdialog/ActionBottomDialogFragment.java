@@ -24,7 +24,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.disnap.R;
-import com.example.disnap.ui.utils.Constants;
+import com.example.disnap.util.Constants;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
