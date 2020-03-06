@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">DiSnap</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="camera">Camera</string>
+    <string name="gellery">Gellery</string>
+    <string name="image_of_a_disease_in_the_chili_plant">image of a disease in the chili plant</string>
+    <string name="title">Title</string>
+    <string name="latin">Latin</string>
 </resources>
