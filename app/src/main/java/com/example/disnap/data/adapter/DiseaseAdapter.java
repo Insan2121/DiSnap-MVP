@@ -30,11 +30,6 @@ public class DiseaseAdapter extends RecyclerView.Adapter<DiseaseAdapter.ViewHold
         this.onItemClickListener = onItemClickListener;
     }
 
-    public DiseaseAdapter(ArrayList<Disease> mDisease, HomeContract.OnItemClickListener onItemClickListener) {
-        this.mDisease = mDisease;
-        this.onItemClickListener = onItemClickListener;
-    }
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -50,7 +45,7 @@ public class DiseaseAdapter extends RecyclerView.Adapter<DiseaseAdapter.ViewHold
         holder.latin.setText(mDisease.get(position).getDiseaseLatin());
         Glide.with(holder.itemView.getContext())
                 .asBitmap()
-                .load(mDisease.get(position).getDiseaseImage())
+                .load(mDisease.get(position).getUserImage())
                 .into(holder.img);
 
         holder.img.setOnClickListener(new View.OnClickListener() {
@@ -73,7 +68,7 @@ public class DiseaseAdapter extends RecyclerView.Adapter<DiseaseAdapter.ViewHold
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
         View nView;
         ImageView img;
         TextView name;
@@ -81,7 +76,7 @@ public class DiseaseAdapter extends RecyclerView.Adapter<DiseaseAdapter.ViewHold
         CardView cardView;
         Disease mItem;
 
-        public ViewHolder(View mView) {
+        ViewHolder(View mView) {
             super(mView);
             nView = mView;
             img = mView.findViewById(R.id.disease_image);

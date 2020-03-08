@@ -13,7 +13,8 @@ import android.widget.Toast;
 import com.example.disnap.R;
 import com.example.disnap.ui.base.BaseFragment;
 import com.example.disnap.ui.bottomsheetdialog.ActionBottomDialogFragment;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,8 +61,8 @@ public class SnapFragment extends BaseFragment {
         });
     }
 
-    public void showBottomSheetFragment(){
-        fragment.show(getFragmentManager(), fragment.getTag());
+    private void showBottomSheetFragment() {
+        fragment.show(Objects.requireNonNull(getFragmentManager()), fragment.getTag());
         fragment.setCancelable(true);
     }
 }

@@ -10,6 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+
 import men.ngopi.zain.jsonloaderlibrary.JSONLoader;
 import men.ngopi.zain.jsonloaderlibrary.JSONObjectLoaderListener;
 
@@ -23,11 +24,6 @@ public class HomePresenter implements HomeContract.Presenter {
         this.context = context;
     }
 
-
-    @Override
-    public void start() {
-
-    }
 
     @Override
     public void populateDiseaseInfo() {
@@ -74,7 +70,7 @@ public class HomePresenter implements HomeContract.Presenter {
                 //String[] pesticide = jsonArray.getJSONObject(i).("pestisida");
                 String indication = jsonArray.getJSONObject(i).getString("gejala");
                 String control = jsonArray.getJSONObject(i).getString("pengendalian");
-                arrayList.add(new Disease(img, name, latin, pesticide, indication, control));
+                arrayList.add(new Disease(name, latin, img, indication, control, pesticide));
 
             }
         } catch (JSONException e) {

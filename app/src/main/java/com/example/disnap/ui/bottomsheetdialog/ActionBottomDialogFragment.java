@@ -47,7 +47,6 @@ import es.dmoral.toasty.Toasty;
 public class ActionBottomDialogFragment extends BottomSheetDialogFragment implements View.OnClickListener {
 
 
-
     public ActionBottomDialogFragment() {
         // Required empty public constructor
     }
@@ -64,15 +63,11 @@ public class ActionBottomDialogFragment extends BottomSheetDialogFragment implem
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
         TextView llCamera = view.findViewById(R.id.viewCamera);
         TextView llGallery = view.findViewById(R.id.viewGallery);
 
         llCamera.setOnClickListener(this);
         llGallery.setOnClickListener(this);
-
-
     }
 
     @Override

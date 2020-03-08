@@ -19,11 +19,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:name="com.example.disnap.App"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.ucrop.UCropActivity"></activity>
+        <activity android:name=".ui.result.ResultActivity"></activity>
         <activity android:name=".ui.analyze.AnalyzeActivity" />
         <activity android:name=".ui.detaildiseaseInfo.DetailDiseaseInfoActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

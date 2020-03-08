@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,8 @@ import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.util.ArrayList;
 
+import io.isfaaghyth.rak.Rak;
+
 import static com.yalantis.ucrop.UCropFragment.TAG;
 
 public class HomeFragment extends BaseFragment implements HomeContract.View, HomeContract.OnItemClickListener {
@@ -30,9 +33,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Hom
     private RecyclerView recyclerView;
     private ShimmerFrameLayout shimmerFrameLayout;
 
-
-
-
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -41,8 +41,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Hom
     public void onStart() {
         super.onStart();
         presenter.populateDiseaseInfo();
-
-
     }
 
     @Override
@@ -69,7 +67,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Hom
         diseaseAdapter = new DiseaseAdapter(this);
         recyclerView.setAdapter(diseaseAdapter);
         diseaseAdapter.notifyDataSetChanged();
-
     }
 
     @Override
@@ -81,7 +78,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Hom
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
         findViews(view);
         initViews(view);
         initListener(view);
@@ -92,6 +89,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Hom
     @Override
     public void setDiseaseInfo(ArrayList<Disease> diseaseInfo) {
         diseaseAdapter.setValues(diseaseInfo);
+        Rak.entry("ListDiseaseTemp", diseaseInfo);
     }
 
     @Override
@@ -115,19 +113,15 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Hom
     @Override
     public void showDetailDiseaseInfoActivity(Disease disease) {
         Intent intent = new Intent(getContext(), DetailDiseaseInfoActivity.class);
-        intent.putExtra("Data", disease);
+        intent.putExtra("Data", (Parcelable) disease);
         startActivity(intent);
     }
 
 
     @Override
     public void clickItem(Disease disease) {
-        Log.d(TAG, "clickItem: "+disease.getDiseaseName());
+        Log.d(TAG, "clickItem: " + disease.getDiseaseName());
         presenter.openDetailDiseaseInfoActivity(disease);
     }
 
-    @Override
-    public void setPresenter(HomeContract.Presenter presenter) {
-        this.presenter = presenter;
-    }
 }

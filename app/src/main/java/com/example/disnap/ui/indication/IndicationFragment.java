@@ -17,7 +17,6 @@ import com.example.disnap.ui.base.BaseFragment;
  */
 public class IndicationFragment extends BaseFragment {
     private TextView tIndication;
-    private String mIndication;
 
     public IndicationFragment() {
         // Required empty public constructor
@@ -28,7 +27,7 @@ public class IndicationFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_indication, container, false);
+        View view = inflater.inflate(R.layout.fragment_indication, container, false);
         findViews(view);
         initViews(view);
         initViews(view);
@@ -42,9 +41,8 @@ public class IndicationFragment extends BaseFragment {
 
     @Override
     public void initViews(View view) {
-
-        if (getArguments().getString("indication") != null){
-            mIndication = getArguments().getString("indication");
+        if (getArguments().getString("indication") != null) {
+            String mIndication = getArguments().getString("indication");
             tIndication.setText(mIndication);
         }
     }

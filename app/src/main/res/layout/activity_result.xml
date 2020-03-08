@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.result.ResultActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/_5sdp"
+        android:paddingBottom="@dimen/_5sdp"
+        android:paddingLeft="@dimen/_10sdp"
+        android:background="@color/colorWhite"
+        android:clickable="true">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true">
+            <ImageView
+                android:id="@+id/btn_back_detail_result"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
+                android:src="@drawable/ic_close"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_alignParentStart="true"
+                android:clickable="true"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_17ssp"
+                android:layout_centerHorizontal="true"
+                android:text="Result"
+                android:layout_centerVertical="true"
+                android:textStyle="bold"/>
+
+        </RelativeLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_main_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/appbar"
+        android:gravity="center">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_result_data"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_100sdp"
+            app:civ_border_color="@color/colorGreen"
+            android:layout_marginTop="@dimen/_10sdp"
+            app:civ_border_width="@dimen/_2sdp"
+            android:src="@drawable/img_cabai"/>
+
+        <ImageView
+            android:id="@+id/img_result_user_photo"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_gravity="left"
+            android:src="@drawable/img_cabai"
+            android:scaleType="fitXY"
+            android:layout_marginLeft="@dimen/_10sdp"/>
+    </LinearLayout>
+    
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_result"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_below="@id/ll_main_image"
+        android:layout_marginTop="@dimen/_10sdp"
+        app:cardElevation="@dimen/_10sdp"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_result_name_disease_"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Layu Fusarium"
+                android:textStyle="bold"
+                android:textSize="@dimen/_15ssp"/>
+            <TextView
+                android:id="@+id/tv_result_latin_disease"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorGreen"
+                android:textSize="@dimen/_12ssp"
+                android:text="Fusarium oxysporium f.sp"
+                android:textStyle="italic"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Akurasi : "
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_15ssp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/tv_result_accuration"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/_12ssp"
+                        android:text="90 "
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/_12ssp"
+                        android:text="%"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cv_result"/>
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tab_layout_result"/>
+
+</RelativeLayout>

@@ -80,4 +80,10 @@ dependencies {
 
     //cicrle image
     implementation 'de.hdodenhof:circleimageview:3.0.1'
+
+    //imageslider
+    implementation 'com.github.smarteist:autoimageslider:1.3.5'
+
+    //autoimageflipper
+    implementation 'com.github.therealshabi:AutoImageFlipper:1.6.0'
 }

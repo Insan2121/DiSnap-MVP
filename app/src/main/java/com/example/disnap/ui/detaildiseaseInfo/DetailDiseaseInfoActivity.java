@@ -22,6 +22,8 @@ import com.example.disnap.ui.indication.IndicationFragment;
 import com.example.disnap.ui.pesticide.PesticideFragment;
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.Objects;
+
 public class DetailDiseaseInfoActivity extends BaseActivity {
     Intent intent;
     Disease disease;
@@ -33,8 +35,6 @@ public class DetailDiseaseInfoActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_disease_info);
 
@@ -57,25 +57,19 @@ public class DetailDiseaseInfoActivity extends BaseActivity {
     @Override
     public void initViews() {
         intent = getIntent();
-        if (intent.getParcelableExtra("Data") != null){
+        if (intent.getParcelableExtra("Data") != null) {
             disease = intent.getParcelableExtra("Data");
-            name.setText(disease.getDiseaseName());
+            name.setText(Objects.requireNonNull(disease).getDiseaseName());
             latin.setText(disease.getDiseaseLatin());
 
             Glide.with(getApplicationContext())
                     .asBitmap()
-                    .load(disease.getDiseaseImage())
+                    .load(disease.getUserImage())
                     .into(diseaseImg);
 
-            Log.d("TAG", "initViews: "+ disease.getDiseaseName());
-
-            showAllDetailDiseaseFragment(disease.getIndication(), disease.getControl(), disease.getPesticide());
-
+            Log.d("TAG", "initViews: " + disease.getDiseaseName());
+            showAllDetailDiseaseFragment(disease.getIndication(), disease.getControling(), disease.getPesticide());
         }
-
-
-
-
     }
 
     @Override
@@ -94,7 +88,7 @@ public class DetailDiseaseInfoActivity extends BaseActivity {
         finish();
     }
 
-    void showAllDetailDiseaseFragment(String mIndication, String mControl, String mPesticide){
+    void showAllDetailDiseaseFragment(String mIndication, String mControl, String mPesticide) {
         //attach tablayout with viewpager
         tabLayout.setupWithViewPager(viewPager);
 

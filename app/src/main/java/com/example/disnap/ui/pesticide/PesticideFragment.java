@@ -42,7 +42,7 @@ public class PesticideFragment extends BaseFragment {
 
     @Override
     public void initViews(View view) {
-        if (getArguments().getString("pesticide") != null){
+        if (getArguments().getString("pesticide") != null) {
             mPesticide = setString(getArguments().getString("pesticide"));
             tPesticide.setText(mPesticide);
         }
@@ -53,11 +53,11 @@ public class PesticideFragment extends BaseFragment {
 
     }
 
-    String setString(String pes){
+    String setString(String pes) {
         String res = pes;
         res = res.replace("]", "");
         res = res.replace("[", "");
-        res = res.replace("," , "`\n\n`");
+        res = res.replace(",", "`\n\n`");
         return res;
     }
 }

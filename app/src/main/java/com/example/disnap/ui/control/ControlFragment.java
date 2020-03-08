@@ -12,13 +12,14 @@ import android.widget.TextView;
 import com.example.disnap.R;
 import com.example.disnap.ui.base.BaseFragment;
 
+import java.util.Objects;
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class ControlFragment extends BaseFragment {
 
-    TextView tControl;
-    String mControl;
+    private TextView tControl;
 
     public ControlFragment() {
         // Required empty public constructor
@@ -43,8 +44,8 @@ public class ControlFragment extends BaseFragment {
 
     @Override
     public void initViews(View view) {
-        if (getArguments().getString("control") != null){
-            mControl = getArguments().getString("control");
+        if (Objects.requireNonNull(getArguments()).getString("control") != null) {
+            String mControl = getArguments().getString("control");
             tControl.setText(setString(mControl));
         }
     }
@@ -54,11 +55,11 @@ public class ControlFragment extends BaseFragment {
 
     }
 
-    String setString(String pes){
+    private String setString(String pes) {
         String res = pes;
         res = res.replace("]", "");
         res = res.replace("[", "");
-        res = res.replace("," , "\n\n");
+        res = res.replace(",", "\n\n");
         return res;
     }
 }
