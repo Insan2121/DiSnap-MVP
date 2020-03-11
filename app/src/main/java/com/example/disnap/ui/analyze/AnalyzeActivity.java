@@ -3,17 +3,25 @@ package com.example.disnap.ui.analyze;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -42,10 +50,13 @@ public class AnalyzeActivity extends BaseActivity implements AnalyzeView {
     private ImageView btnCamera;
     private Button btnAnalyze;
     private ImageView imageUser;
-    DiseaseRepository diseaseRepository;
-    AnalyzePresenter analyzePresenter;
+    private DiseaseRepository diseaseRepository;
+    private AnalyzePresenter analyzePresenter;
     private ProgressBar progressBar;
     private static ActionBottomDialogFragment fragment = new ActionBottomDialogFragment();
+    private int status = 0;
+    private Handler handler = new Handler();
+    private FrameLayout fl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +74,7 @@ public class AnalyzeActivity extends BaseActivity implements AnalyzeView {
 
     @Override
     public void findViews() {
+        fl = findViewById(R.id.container);
         btnBack = findViewById(R.id.btn_back_analyze);
         btnCamera = findViewById(R.id.btn_new_image);
         btnAnalyze = findViewById(R.id.button_analyze);
@@ -194,16 +206,70 @@ public class AnalyzeActivity extends BaseActivity implements AnalyzeView {
 
     @Override
     public void showLoading() {
-        progressBar.setVisibility(View.VISIBLE);
+        //progressBar.setVisibility(View.VISIBLE);
+        showDialog(AnalyzeActivity.this, "Success");
     }
 
     @Override
     public void hideLoading() {
-        progressBar.setVisibility(View.GONE);
+       // progressBar.setVisibility(View.GONE);
+        //showDialog(AnalyzeActivity.this, "Success");
+
     }
 
     @Override
     public void showErrorMessage() {
+    }
+
+    public void showDialog(Activity activity, String message){
+        final Dialog dialog = new Dialog(activity, R.style.Widget_AppCompat_ProgressBar_Horizontal);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.progress_bar_dialog);
+        fl.setBackgroundColor(Color.BLACK);
+
+        final ProgressBar text = (ProgressBar) dialog.findViewById(R.id.progress_horizontal);
+        final TextView text2 = dialog.findViewById(R.id.value123);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (status < 100) {
+
+                    status += 1;
+
+                    try {
+                        Thread.sleep(50);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            text.setProgress(status);
+                            text2.setText(String.valueOf(status));
+
+                            if (status == 100) {
+                                dialog.dismiss();
+                            }
+                        }
+                    });
+                }
+            }
+        }).start();
+
+        dialog.show();
+        Window window = dialog.getWindow();
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
 
     }
 }
+
+

@@ -10,7 +10,7 @@
         android:id="@+id/btn_snap"
         android:layout_width="@dimen/_100sdp"
         android:layout_height="@dimen/_100sdp"
-        android:src="@drawable/img_green_logo"
+        android:src="@drawable/ic_img_logo_sv"
         android:clickable="true"/>
 
 </LinearLayout>

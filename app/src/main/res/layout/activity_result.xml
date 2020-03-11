@@ -41,105 +41,144 @@
         </RelativeLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <LinearLayout
-        android:id="@+id/ll_main_image"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_below="@id/appbar"
-        android:gravity="center">
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/img_result_data"
-            android:layout_width="@dimen/_100sdp"
-            android:layout_height="@dimen/_100sdp"
-            app:civ_border_color="@color/colorGreen"
-            android:layout_marginTop="@dimen/_10sdp"
-            app:civ_border_width="@dimen/_2sdp"
-            android:src="@drawable/img_cabai"/>
-
-        <ImageView
-            android:id="@+id/img_result_user_photo"
-            android:layout_width="@dimen/_80sdp"
-            android:layout_height="@dimen/_50sdp"
-            android:layout_gravity="left"
-            android:src="@drawable/img_cabai"
-            android:scaleType="fitXY"
-            android:layout_marginLeft="@dimen/_10sdp"/>
-    </LinearLayout>
-    
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cv_result"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_100sdp"
-        android:layout_below="@id/ll_main_image"
-        android:layout_marginTop="@dimen/_10sdp"
-        app:cardElevation="@dimen/_10sdp"
-        >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:layout_marginRight="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/tv_result_name_disease_"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Layu Fusarium"
-                android:textStyle="bold"
-                android:textSize="@dimen/_15ssp"/>
-            <TextView
-                android:id="@+id/tv_result_latin_disease"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorGreen"
-                android:textSize="@dimen/_12ssp"
-                android:text="Fusarium oxysporium f.sp"
-                android:textStyle="italic"/>
+            android:orientation="vertical"
+            android:layout_below="@id/appbar"
+            >
             <LinearLayout
+                android:id="@+id/ll_main_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:gravity="center">
+                <!--<de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/img_result_data"
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_100sdp"
+                    app:civ_border_color="@color/colorGreen"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:civ_border_width="@dimen/_2sdp"
+                    android:src="@drawable/img_cabai"/>
+
+                <ImageView
+                    android:id="@+id/img_result_user_photo"
+                    android:layout_width="@dimen/_80sdp"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_gravity="left"
+                    android:src="@drawable/img_cabai"
+                    android:scaleType="fitXY"
+                    android:layout_marginLeft="@dimen/_10sdp"/>-->
+
                 <TextView
+                    android:id="@+id/textImageSlider"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Akurasi : "
-                    android:textStyle="bold"
-                    android:textSize="@dimen/_15ssp"/>
+                    android:textSize="@dimen/_20ssp"
+                    android:text="Makan bang"/>
+
+                <androidx.cardview.widget.CardView
+                    app:cardCornerRadius="6dp"
+                    android:layout_margin="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.smarteist.autoimageslider.SliderView
+                        android:id="@+id/imageSlider"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        app:sliderAnimationDuration="600"
+                        app:sliderAutoCycleDirection="back_and_forth"
+                        app:sliderAutoCycleEnabled="true"
+                        app:sliderIndicatorAnimationDuration="600"
+                        app:sliderIndicatorGravity="center_horizontal|bottom"
+                        app:sliderIndicatorMargin="15dp"
+                        app:sliderIndicatorOrientation="horizontal"
+                        app:sliderIndicatorPadding="3dp"
+                        app:sliderIndicatorRadius="2dp"
+                        app:sliderIndicatorSelectedColor="#5A5A5A"
+                        app:sliderIndicatorUnselectedColor="#FFF"
+                        app:sliderScrollTimeInSec="1"
+                        app:sliderStartAutoCycle="true" />
+
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_result"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_100sdp"
+                android:layout_below="@id/ll_main_image"
+                android:layout_marginTop="@dimen/_10sdp"
+                app:cardElevation="@dimen/_10sdp"
+                >
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:orientation="horizontal">
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:orientation="vertical">
                     <TextView
-                        android:id="@+id/tv_result_accuration"
+                        android:id="@+id/tv_result_name_disease_"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/_12ssp"
-                        android:text="90 "
-                        android:textStyle="bold"/>
+                        android:text="Layu Fusarium"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/_15ssp"/>
                     <TextView
+                        android:id="@+id/tv_result_latin_disease"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/colorGreen"
                         android:textSize="@dimen/_12ssp"
-                        android:text="%"
-                        android:textStyle="bold"/>
+                        android:text="Fusarium oxysporium f.sp"
+                        android:textStyle="italic"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Akurasi : "
+                            android:textStyle="bold"
+                            android:textSize="@dimen/_15ssp"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:id="@+id/tv_result_accuration"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/_12ssp"
+                                android:text="90 "
+                                android:textStyle="bold"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/_12ssp"
+                                android:text="%"
+                                android:textStyle="bold"/>
+                        </LinearLayout>
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab_layout_result"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/cv_result"/>
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/view_pager_result"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tab_layout_result"/>
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout_result"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cv_result"/>
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/view_pager_result"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tab_layout_result"/>
+        </LinearLayout>
 
 </RelativeLayout>

@@ -39,6 +39,11 @@ public class DiseaseRemoteDataSource implements DiseaseDataSource {
     }
 
     @Override
+    public void removeHistoryFromDB(RemoveHistoryCallback callback, Disease disease) {
+
+    }
+
+    @Override
     public void analyzeImage(final LoadAnalyzeCallback callback, String img) {
         callback.onShowLoading();
         String indexRandom = randomNumberString(getRandomNumber());
@@ -72,6 +77,11 @@ public class DiseaseRemoteDataSource implements DiseaseDataSource {
 
     @Override
     public void getDiseaseAnalysisResultFromDB(LoadDiseaseCallback callback) {
+
+    }
+
+    @Override
+    public void getDiseaseFromJSONFile(LoadDiseaseFromJSONFileCallback callback) {
 
     }
 
@@ -112,6 +122,7 @@ public class DiseaseRemoteDataSource implements DiseaseDataSource {
                             disease.setDiseaseName(name);
                             if (Rak.grab("ListDiseaseTemp") != null){
                                 diseaseArrayList = Rak.grab("ListDiseaseTemp");
+                                Log.d(TAG, "onResponse12: "+diseaseArrayList.size());
                                 for (int i = 0; i < diseaseArrayList.size() ; i++) {
                                     if (name.equalsIgnoreCase(diseaseArrayList.get(i).getDiseaseName())){
                                         disease.setDiseaseLatin(diseaseArrayList.get(i).getDiseaseLatin());
@@ -132,9 +143,7 @@ public class DiseaseRemoteDataSource implements DiseaseDataSource {
                                         Log.d(TAG, "onResponse6: "+disease.getControling());
                                         Log.d(TAG, "onResponse7: "+disease.getPesticide());
                                         Log.d(TAG, "onResponse8: "+disease.getDate());
-
                                         callback.onAnalyzeSuccess(disease);
-
                                     }
                                 }
                             }

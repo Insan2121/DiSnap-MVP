@@ -34,12 +34,28 @@
         android:layout_below="@id/appbar"
         android:visibility="visible"
         tools:listitem="@layout/item_card_history"/>
-    <TextView
-        android:id="@+id/tv_info_history"
-        android:layout_width="wrap_content"
+    
+
+
+    <LinearLayout
+        android:id="@+id/ll_history_warning"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tidak ada History"
         android:layout_centerInParent="true"
-        android:textSize="@dimen/_20ssp"
-        android:visibility="gone"/>
+        android:gravity="center"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="@dimen/_290sdp"
+            android:layout_height="@dimen/_200sdp"
+            android:src="@drawable/img_no_history" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_15ssp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:text="You dont have any activity history"/>
+
+    </LinearLayout>
 </RelativeLayout>

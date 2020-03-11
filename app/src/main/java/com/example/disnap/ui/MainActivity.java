@@ -16,6 +16,7 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
+import com.example.disnap.App;
 import com.example.disnap.R;
 import com.example.disnap.ui.analyze.AnalyzeActivity;
 import com.example.disnap.ui.bottomsheetdialog.ActionBottomDialogFragment;
@@ -50,7 +51,7 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
 
         Rak.initialize(getApplicationContext());
-        AndroidNetworking.initialize(getApplicationContext());
+        AndroidNetworking.initialize(App.getContext());
 
         findViews();
         initViews();

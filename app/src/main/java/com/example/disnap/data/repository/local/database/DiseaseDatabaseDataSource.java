@@ -12,17 +12,19 @@ import java.util.concurrent.Executor;
 
 import static com.yalantis.ucrop.UCropFragment.TAG;
 
-public class DiseaseLocalDataSource implements DiseaseDataSource {
+public class DiseaseDatabaseDataSource implements DiseaseDataSource {
     private Executor executor;
-    private static DiseaseLocalDataSource instance;
+    private static DiseaseDatabaseDataSource instance;
+    private int prevDataSize;
+    private int presentDataSize;
 
-    private DiseaseLocalDataSource(Executor executor) {
+    private DiseaseDatabaseDataSource(Executor executor) {
         this.executor = executor;
     }
 
-    public static DiseaseLocalDataSource getInstance() {
+    public static DiseaseDatabaseDataSource getInstance() {
         if (instance == null) {
-            instance = new DiseaseLocalDataSource(new DiskExecutor());
+            instance = new DiseaseDatabaseDataSource(new DiskExecutor());
         }
         return instance;
     }
@@ -30,18 +32,35 @@ public class DiseaseLocalDataSource implements DiseaseDataSource {
 
     @Override
     public void insertAnalysisResultToDB(final InsertAnalysisResultCallback callback, final Disease disease) {
-        final int prevDataSize = getDataSize();
+        prevDataSize = getDataSize();
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-
                 long status = AppDatabase.getDatabaseInstance().diseaseDAO().insertDiseaseToDB(disease);
                 Log.d("cekstatusinsert", status + "");
-                int presentDataSize = getDataSize();
+                presentDataSize = getDataSize();
                 if (presentDataSize > prevDataSize) {
                     callback.onInsertSuccess("Success to Added");
                 } else {
                     callback.onInsertError("Failed to Added");
+                }
+            }
+        };
+        executor.execute(runnable);
+    }
+
+    @Override
+    public void removeHistoryFromDB(final RemoveHistoryCallback callback, final Disease disease) {
+        prevDataSize = getDataSize();
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                AppDatabase.getDatabaseInstance().diseaseDAO().delete(disease);
+                presentDataSize = getDataSize();
+                if (presentDataSize < prevDataSize) {
+                    callback.onRemoveSuccess("Remove success");
+                } else {
+                    callback.onRemoveFailed("Remove Failed");
                 }
             }
         };
@@ -63,17 +82,22 @@ public class DiseaseLocalDataSource implements DiseaseDataSource {
                 if (diseases.size() != 0) {
                     callback.onDiseaseLoaded(diseases);
                 } else {
-                    callback.onError();
+                    callback.onError("You have no story activity yet");
                 }
             }
         };
         executor.execute(runnable);
     }
 
+    @Override
+    public void getDiseaseFromJSONFile(LoadDiseaseFromJSONFileCallback callback) {
+
+    }
+
 
     private int getDataSize() {
         ArrayList<Disease> diseases = new ArrayList<>(Arrays.asList(AppDatabase.getDatabaseInstance().diseaseDAO().selectAllHistory()));
-        Log.d(TAG, "getNameken:" + diseases.get(diseases.size() - 1).getDiseaseName());
+        //Log.d(TAG, "getNameken:" + diseases.get(diseases.size() - 1).getDiseaseName());
         return diseases.size();
     }
 

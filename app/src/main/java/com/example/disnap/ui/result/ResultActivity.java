@@ -4,12 +4,15 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.disnap.data.adapter.SliderAdapter;
+import com.example.disnap.data.pojo.ImageSlide;
 import com.example.disnap.data.repository.DataManager;
 import com.example.disnap.data.repository.DiseaseRepository;
 import com.example.disnap.ui.MainActivity;
@@ -21,6 +24,9 @@ import com.example.disnap.ui.control.ControlFragment;
 import com.example.disnap.ui.indication.IndicationFragment;
 import com.example.disnap.ui.pesticide.PesticideFragment;
 import com.google.android.material.tabs.TabLayout;
+import com.smarteist.autoimageslider.IndicatorAnimations;
+import com.smarteist.autoimageslider.SliderAnimations;
+import com.smarteist.autoimageslider.SliderView;
 import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
@@ -41,6 +47,8 @@ public class ResultActivity extends BaseActivity implements ResultView {
     private ViewPager viewPager;
     private TabLayout tabLayout;
 
+    SliderView sliderView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,12 +66,14 @@ public class ResultActivity extends BaseActivity implements ResultView {
         tvDiseaseName = findViewById(R.id.tv_result_name_disease_);
         tvLatinName = findViewById(R.id.tv_result_latin_disease);
         tvAccuration = findViewById(R.id.tv_result_accuration);
-        imgResult = findViewById(R.id.img_result_data);
-        imgUser = findViewById(R.id.img_result_user_photo);
+        /*imgResult = findViewById(R.id.img_result_data);
+        imgUser = findViewById(R.id.img_result_user_photo);*/
 
         tabLayout = findViewById(R.id.tab_layout_result);
         viewPager = findViewById(R.id.view_pager_result);
         btnBack = findViewById(R.id.btn_back_detail_result);
+
+        sliderView = findViewById(R.id.imageSlider);
     }
 
     @Override
@@ -77,23 +87,16 @@ public class ResultActivity extends BaseActivity implements ResultView {
         tvLatinName.setText(disease.getDiseaseLatin());
         tvAccuration.setText(getPersentageResult(disease.getAccuration()));
 
-        Picasso.get()
+        /*Picasso.get()
                 .load(disease.getResultImage())
                 .into(imgResult);
 
+
         Picasso.get()
                 .load(disease.getUserImage())
-                .into(imgUser);
-
-        Log.d(TAG, "1onResponse0: " + disease.getDiseaseName());
-        Log.d(TAG, "1onResponse1: " + disease.getDiseaseLatin());
-        Log.d(TAG, "1onResponse2: " + disease.getAccuration());
-        Log.d(TAG, "1onResponse3: " + disease.getResultImage());
-        Log.d(TAG, "1onResponse4: " + disease.getUserImage());
-        Log.d(TAG, "1onResponse5: " + disease.getIndication());
-        Log.d(TAG, "1onResponse6: " + disease.getControling());
-        Log.d(TAG, "1onResponse7: " + disease.getPesticide());
-        Log.d(TAG, "1onResponse8: " + disease.getDate());
+                .into(imgUser);*/
+        initiateImage(disease.getResultImage(), "Result Image");
+        initiateImage(disease.getUserImage(), "Your Image");
 
         showAllDetailDiseaseFragment(disease.getIndication(), disease.getControling(), disease.getPesticide());
 
@@ -158,7 +161,6 @@ public class ResultActivity extends BaseActivity implements ResultView {
         DiseaseRepository diseaseRepository = DataManager.getInstance().getDiseaseFromDB();
         ResultPresenter historyPresenter = new ResultPresenter(this, diseaseRepository);
         historyPresenter.insertHistoryToDB(disease);
-
     }
 
     @Override
@@ -169,6 +171,27 @@ public class ResultActivity extends BaseActivity implements ResultView {
     @Override
     public void showInsertFailed(String message) {
         //Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    void initiateImage(String img, String description){
+        SliderView sliderView = findViewById(R.id.imageSlider);
+
+        SliderAdapter adapter = new SliderAdapter(this);
+        ImageSlide imgUser = new ImageSlide(img, description);
+        ImageSlide imgResult = new ImageSlide(img, description);
+
+
+        sliderView.setSliderAdapter(new SliderAdapter(this));
+        adapter.addItem(imgUser);
+        adapter.addItem(imgResult);
+
+        sliderView.setIndicatorAnimation(IndicatorAnimations.WORM); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
+        sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+        sliderView.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH);
+        sliderView.setIndicatorSelectedColor(Color.WHITE);
+        sliderView.setIndicatorUnselectedColor(Color.GRAY);
+        sliderView.setScrollTimeInSec(4); //set scroll delay in seconds :
+        sliderView.startAutoCycle();
     }
 
 }

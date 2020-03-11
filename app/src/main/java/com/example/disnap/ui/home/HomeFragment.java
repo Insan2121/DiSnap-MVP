@@ -3,6 +3,8 @@ package com.example.disnap.ui.home;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,6 +18,8 @@ import android.view.ViewGroup;
 import com.example.disnap.R;
 import com.example.disnap.data.adapter.DiseaseAdapter;
 import com.example.disnap.data.pojo.Disease;
+import com.example.disnap.data.repository.DataManager;
+import com.example.disnap.data.repository.DiseaseRepository;
 import com.example.disnap.ui.base.BaseFragment;
 import com.example.disnap.ui.detaildiseaseInfo.DetailDiseaseInfoActivity;
 import com.facebook.shimmer.ShimmerFrameLayout;
@@ -26,9 +30,9 @@ import io.isfaaghyth.rak.Rak;
 
 import static com.yalantis.ucrop.UCropFragment.TAG;
 
-public class HomeFragment extends BaseFragment implements HomeContract.View, HomeContract.OnItemClickListener {
 
-    private HomeContract.Presenter presenter;
+public class HomeFragment extends BaseFragment implements HomeView, DiseaseAdapter.OnItemClickListener {
+
     private DiseaseAdapter diseaseAdapter;
     private RecyclerView recyclerView;
     private ShimmerFrameLayout shimmerFrameLayout;
@@ -37,11 +41,11 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Hom
         // Required empty public constructor
     }
 
-    @Override
+/*    @Override
     public void onStart() {
         super.onStart();
         presenter.populateDiseaseInfo();
-    }
+    }*/
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,8 +64,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Hom
 
     @Override
     public void initViews(View view) {
-
-        presenter = new HomePresenter(this, getContext());
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         diseaseAdapter = new DiseaseAdapter(this);
@@ -78,6 +80,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Hom
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         findViews(view);
         initViews(view);
@@ -85,20 +88,37 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Hom
         return view;
     }
 
-
     @Override
-    public void setDiseaseInfo(ArrayList<Disease> diseaseInfo) {
-        diseaseAdapter.setValues(diseaseInfo);
-        Rak.entry("ListDiseaseTemp", diseaseInfo);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        DiseaseRepository diseaseRepository = DataManager.getInstance().getDiseaseFromJSON();
+        HomePresenter homePresenter = new HomePresenter(this,diseaseRepository);
+        homePresenter.getAllDiseaseInfo();
+
     }
 
     @Override
-    public void showProgress() {
+    public void showDisease(ArrayList<Disease> disease) {
+        diseaseAdapter.setValues(disease);
+        Rak.entry("ListDiseaseTemp", disease);
+
+        if (Rak.grab("ListDiseaseTemp") != null){
+            ArrayList<Disease> diseases = new ArrayList<>();
+            disease = Rak.grab("ListDiseaseTemp");
+            Log.d(TAG, "showDisease: "+disease.size());
+        }else {
+            Log.d(TAG, "showDisease: "+"no data");
+        }
+    }
+
+    @Override
+    public void showLoading() {
         shimmerFrameLayout.startShimmer();
     }
 
     @Override
-    public void hideProgress() {
+    public void hideLoading() {
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -111,17 +131,15 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Hom
     }
 
     @Override
-    public void showDetailDiseaseInfoActivity(Disease disease) {
+    public void showErrorMessage() {
+
+    }
+
+    @Override
+    public void clickItem(Disease disease) {
+        Log.d("fak", "onDiseaseClicked: "+disease.getDiseaseName());
         Intent intent = new Intent(getContext(), DetailDiseaseInfoActivity.class);
         intent.putExtra("Data", (Parcelable) disease);
         startActivity(intent);
     }
-
-
-    @Override
-    public void clickItem(Disease disease) {
-        Log.d(TAG, "clickItem: " + disease.getDiseaseName());
-        presenter.openDetailDiseaseInfoActivity(disease);
-    }
-
 }

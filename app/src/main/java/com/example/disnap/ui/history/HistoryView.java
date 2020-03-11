@@ -8,5 +8,9 @@ import java.util.ArrayList;
 public interface HistoryView extends BaseView {
     void showHistory(ArrayList<Disease> disease);
 
-    void showErrorMessage();
+    void showErrorMessage(String message);
+
+    void showRemoveSuccess(String message);
+
+    void showRemoveFailed(String message);
 }

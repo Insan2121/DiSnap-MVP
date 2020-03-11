@@ -17,7 +17,7 @@
         <ImageView
             android:layout_width="@dimen/_30sdp"
             android:layout_height="@dimen/_30sdp"
-            app:srcCompat="@drawable/img_green_logo"
+            app:srcCompat="@drawable/img_logo"
             android:contentDescription="@string/logo_apps" />
         <TextView
             android:layout_width="wrap_content"
@@ -25,6 +25,7 @@
             android:text="@string/title_apps_home"
             android:layout_gravity="center"
             android:textSize="@dimen/_13ssp"
+            android:textStyle="bold"
             android:layout_marginStart="@dimen/_5sdp"
             android:textColor="@color/colorGreen"/>
     </androidx.appcompat.widget.LinearLayoutCompat>

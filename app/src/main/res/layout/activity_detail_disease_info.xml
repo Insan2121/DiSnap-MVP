@@ -40,55 +40,59 @@
                 android:textStyle="bold"/>
         </RelativeLayout>
     </com.google.android.material.appbar.AppBarLayout>
-    <LinearLayout
-        android:id="@+id/mainInfo"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_below="@id/appbar"
-        android:gravity="center">
-        <TextView
-            android:id="@+id/tv_name_disease_info_detail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:text="@string/title"
-            android:textStyle="bold"
-            android:textSize="@dimen/_15ssp"/>
-        <TextView
-            android:id="@+id/tv_latin_disease_info_detail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorGreen"
-            android:textSize="@dimen/_12ssp"
-            android:text="@string/latin"
-            android:textStyle="italic"/>
-        <androidx.cardview.widget.CardView
-            android:id="@+id/parent_layout"
+        android:layout_below="@id/appbar">
+        <LinearLayout
+            android:id="@+id/mainInfo"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_250sdp"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:layout_marginBottom="@dimen/_11sdp"
-            app:cardCornerRadius="@dimen/_10sdp">
-
-            <ImageView
-                android:id="@+id/img_desease_plant"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/tv_name_disease_info_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:text="@string/title"
+                android:textStyle="bold"
+                android:textSize="@dimen/_15ssp"/>
+            <TextView
+                android:id="@+id/tv_latin_disease_info_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorGreen"
+                android:textSize="@dimen/_12ssp"
+                android:text="@string/latin"
+                android:textStyle="italic"/>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/parent_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:contentDescription="@string/image_of_a_disease_in_the_chili_plant"/>
-        </androidx.cardview.widget.CardView>
-    </LinearLayout>
+                android:layout_height="@dimen/_250sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                app:cardCornerRadius="@dimen/_10sdp">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/mainInfo"/>
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/view_pager"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tab_layout"/>
+                <ImageView
+                    android:id="@+id/img_desease_plant"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:contentDescription="@string/image_of_a_disease_in_the_chili_plant"/>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/mainInfo"/>
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tab_layout"/>
+    </RelativeLayout>
 
 </RelativeLayout>

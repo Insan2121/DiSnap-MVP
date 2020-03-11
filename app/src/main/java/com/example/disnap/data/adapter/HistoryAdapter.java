@@ -1,5 +1,8 @@
 package com.example.disnap.data.adapter;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,18 +17,28 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.disnap.R;
 import com.example.disnap.data.pojo.Disease;
-import com.example.disnap.ui.history.HistoryContract;
+import com.example.disnap.util.SendDataToHistoryAdapter;
 
 
 import java.util.ArrayList;
 
 import static com.yalantis.ucrop.UCropFragment.TAG;
 
-public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder> {
-    private ArrayList<Disease> historyArrayList;
-    private HistoryContract.OnItemClickListener itemClickListener;
+public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder>{
 
-    public HistoryAdapter(HistoryContract.OnItemClickListener itemClickListener) {
+   private Context context;
+
+    public interface OnItemClickListener {
+        void clickItem(Disease disease);
+
+        void clickRemoveButton(Disease disease);
+    }
+
+    private ArrayList<Disease> historyArrayList;
+    private OnItemClickListener itemClickListener;
+
+    public HistoryAdapter(OnItemClickListener itemClickListener, Context context) {
+        this.context = context;
         historyArrayList = new ArrayList<>();
         this.itemClickListener = itemClickListener;
     }
@@ -59,12 +72,22 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
                 itemClickListener.clickItem(holder.mItem);
             }
         });
+
+        holder.btnRemove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick01: "+"true");
+                showAlertDialog(position,holder.mItem);
+            }
+        });
+
     }
 
     @Override
     public int getItemCount() {
         return historyArrayList.size();
     }
+
 
     public void setValues(ArrayList<Disease> diseases) {
         historyArrayList = diseases;
@@ -77,6 +100,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         private TextView diseaseName;
         private TextView latinName;
         private TextView date;
+        private Button btnRemove;
         Disease mItem;
 
 
@@ -87,8 +111,37 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
             diseaseName = itemView.findViewById(R.id.tv_history_disease_name);
             latinName = itemView.findViewById(R.id.tv_history_disease_latin);
             date = itemView.findViewById(R.id.tv_history_date);
-            Button btnRemove = itemView.findViewById(R.id.btn_remove_history);
-
+            btnRemove = itemView.findViewById(R.id.btn_remove_history);
         }
+
+
     }
+   void removeHistoryItem(int position){
+        historyArrayList.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, historyArrayList.size());
+    }
+
+
+    void showAlertDialog(final int position, final Disease disease){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Remove");
+        builder.setMessage("Do you want to remove this history?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                itemClickListener.clickRemoveButton(disease);
+                removeHistoryItem(position);
+            }
+        })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
 }

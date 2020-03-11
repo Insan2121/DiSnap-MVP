@@ -1,7 +1,5 @@
 package com.example.disnap.ui.history;
 
-import android.content.Context;
-
 import com.example.disnap.data.pojo.Disease;
 import com.example.disnap.data.repository.DiseaseDataSource;
 import com.example.disnap.data.repository.DiseaseRepository;
@@ -19,17 +17,17 @@ class HistoryPresenter extends BasePresenter<HistoryView> {
         this.diseaseRepository = diseaseRepository;
     }
 
-    HistoryPresenter(HistoryView view) {
-        super(view);
-    }
-
 
     void getAllHistory() {
         diseaseRepository.getDiseaseAnalysisResultFromDB(new DiseaseCallListener(view));
     }
 
+    void removeHistory(Disease disease){
+        diseaseRepository.removeHistoryFromDB(new DiseaseCallListener(view), disease);
+    }
 
-    private static class DiseaseCallListener implements DiseaseDataSource.LoadDiseaseCallback {
+
+    private static class DiseaseCallListener implements DiseaseDataSource.LoadDiseaseCallback, DiseaseDataSource.RemoveHistoryCallback {
         private WeakReference<HistoryView> view;
 
         private DiseaseCallListener(HistoryView view) {
@@ -43,9 +41,21 @@ class HistoryPresenter extends BasePresenter<HistoryView> {
         }
 
         @Override
-        public void onError() {
+        public void onError(String message) {
             if (view.get() == null) return;
-            view.get().showErrorMessage();
+            view.get().showErrorMessage(message);
+        }
+
+
+        @Override
+        public void onRemoveSuccess(String message) {
+            if (view.get() == null) return;
+            view.get().showRemoveSuccess(message);
+        }
+
+        @Override
+        public void onRemoveFailed(String message) {
+            view.get().showRemoveFailed(message);
         }
     }
 }

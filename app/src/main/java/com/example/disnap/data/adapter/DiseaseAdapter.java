@@ -8,24 +8,28 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.disnap.R;
 import com.example.disnap.data.pojo.Disease;
-import com.example.disnap.ui.home.HomeContract;
-
 import java.util.ArrayList;
-
 import static com.yalantis.ucrop.UCropFragment.TAG;
+
 
 public class DiseaseAdapter extends RecyclerView.Adapter<DiseaseAdapter.ViewHolder> {
 
-    private ArrayList<Disease> mDisease;
-    private HomeContract.OnItemClickListener onItemClickListener;
+   public interface OnItemClickListener {
+        void clickItem(Disease disease);
+    }
 
-    public DiseaseAdapter(HomeContract.OnItemClickListener onItemClickListener) {
+    private ArrayList<Disease> mDisease;
+    private OnItemClickListener onItemClickListener;
+
+
+
+    public DiseaseAdapter(OnItemClickListener onItemClickListener) {
         mDisease = new ArrayList<>();
         this.onItemClickListener = onItemClickListener;
     }
@@ -73,7 +77,6 @@ public class DiseaseAdapter extends RecyclerView.Adapter<DiseaseAdapter.ViewHold
         ImageView img;
         TextView name;
         TextView latin;
-        CardView cardView;
         Disease mItem;
 
         ViewHolder(View mView) {
@@ -82,7 +85,9 @@ public class DiseaseAdapter extends RecyclerView.Adapter<DiseaseAdapter.ViewHold
             img = mView.findViewById(R.id.disease_image);
             name = mView.findViewById(R.id.disease_name);
             latin = mView.findViewById(R.id.disease_latin);
-            cardView = mView.findViewById(R.id.parent_layout);
+
         }
     }
+
+
 }
