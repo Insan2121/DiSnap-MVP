@@ -4,15 +4,12 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.disnap.data.adapter.SliderAdapter;
-import com.example.disnap.data.pojo.ImageSlide;
+import com.example.disnap.data.adapter.ImageViewPagerAdapter;
 import com.example.disnap.data.repository.DataManager;
 import com.example.disnap.data.repository.DiseaseRepository;
 import com.example.disnap.ui.MainActivity;
@@ -24,17 +21,9 @@ import com.example.disnap.ui.control.ControlFragment;
 import com.example.disnap.ui.indication.IndicationFragment;
 import com.example.disnap.ui.pesticide.PesticideFragment;
 import com.google.android.material.tabs.TabLayout;
-import com.smarteist.autoimageslider.IndicatorAnimations;
-import com.smarteist.autoimageslider.SliderAnimations;
-import com.smarteist.autoimageslider.SliderView;
-import com.squareup.picasso.Picasso;
+import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
 
 import java.util.Objects;
-
-import technolifestyle.com.imageslider.FlipperLayout;
-import technolifestyle.com.imageslider.FlipperView;
-
-import static com.yalantis.ucrop.UCropFragment.TAG;
 
 public class ResultActivity extends BaseActivity implements ResultView {
     private TextView tvDiseaseName;
@@ -47,7 +36,8 @@ public class ResultActivity extends BaseActivity implements ResultView {
     private ViewPager viewPager;
     private TabLayout tabLayout;
 
-    SliderView sliderView;
+    private ViewPager viewPagerImage;
+    private WormDotsIndicator wormDotsIndicator;
 
 
     @Override
@@ -73,7 +63,9 @@ public class ResultActivity extends BaseActivity implements ResultView {
         viewPager = findViewById(R.id.view_pager_result);
         btnBack = findViewById(R.id.btn_back_detail_result);
 
-        sliderView = findViewById(R.id.imageSlider);
+        viewPagerImage = findViewById(R.id.viewPagerImage);
+        wormDotsIndicator = findViewById(R.id.worm_dots_indicator);
+
     }
 
     @Override
@@ -95,8 +87,11 @@ public class ResultActivity extends BaseActivity implements ResultView {
         Picasso.get()
                 .load(disease.getUserImage())
                 .into(imgUser);*/
-        initiateImage(disease.getResultImage(), "Result Image");
-        initiateImage(disease.getUserImage(), "Your Image");
+        String[] urlImg = {disease.getResultImage(), disease.getUserImage()};
+
+        ImageViewPagerAdapter imageViewPagerAdapter = new ImageViewPagerAdapter(this, urlImg);
+        viewPagerImage.setAdapter(imageViewPagerAdapter);
+        wormDotsIndicator.setViewPager(viewPagerImage);
 
         showAllDetailDiseaseFragment(disease.getIndication(), disease.getControling(), disease.getPesticide());
 
@@ -173,25 +168,5 @@ public class ResultActivity extends BaseActivity implements ResultView {
         //Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 
-    void initiateImage(String img, String description){
-        SliderView sliderView = findViewById(R.id.imageSlider);
-
-        SliderAdapter adapter = new SliderAdapter(this);
-        ImageSlide imgUser = new ImageSlide(img, description);
-        ImageSlide imgResult = new ImageSlide(img, description);
-
-
-        sliderView.setSliderAdapter(new SliderAdapter(this));
-        adapter.addItem(imgUser);
-        adapter.addItem(imgResult);
-
-        sliderView.setIndicatorAnimation(IndicatorAnimations.WORM); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
-        sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
-        sliderView.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH);
-        sliderView.setIndicatorSelectedColor(Color.WHITE);
-        sliderView.setIndicatorUnselectedColor(Color.GRAY);
-        sliderView.setScrollTimeInSec(4); //set scroll delay in seconds :
-        sliderView.startAutoCycle();
-    }
 
 }

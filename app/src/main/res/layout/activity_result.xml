@@ -53,56 +53,24 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="center">
-                <!--<de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/img_result_data"
-                    android:layout_width="@dimen/_100sdp"
-                    android:layout_height="@dimen/_100sdp"
-                    app:civ_border_color="@color/colorGreen"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    app:civ_border_width="@dimen/_2sdp"
-                    android:src="@drawable/img_cabai"/>
 
-                <ImageView
-                    android:id="@+id/img_result_user_photo"
-                    android:layout_width="@dimen/_80sdp"
-                    android:layout_height="@dimen/_50sdp"
-                    android:layout_gravity="left"
-                    android:src="@drawable/img_cabai"
-                    android:scaleType="fitXY"
-                    android:layout_marginLeft="@dimen/_10sdp"/>-->
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/viewPagerImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_200sdp"
+                    android:layout_marginBottom="@dimen/_8sdp"/>
 
-                <TextView
-                    android:id="@+id/textImageSlider"
+                <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+                    android:id="@+id/worm_dots_indicator"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/_20ssp"
-                    android:text="Makan bang"/>
+                    app:dotsColor="@color/colorGreen"
+                    app:dotsStrokeColor="@color/colorGreen"
+                    app:dotsCornerRadius="@dimen/_10sdp"
+                    app:dotsSize="@dimen/_7sdp"
+                    app:dotsSpacing="@dimen/_4sdp"
+                    app:dotsStrokeWidth="@dimen/_1sdp"/>
 
-                <androidx.cardview.widget.CardView
-                    app:cardCornerRadius="6dp"
-                    android:layout_margin="16dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <com.smarteist.autoimageslider.SliderView
-                        android:id="@+id/imageSlider"
-                        android:layout_width="match_parent"
-                        android:layout_height="300dp"
-                        app:sliderAnimationDuration="600"
-                        app:sliderAutoCycleDirection="back_and_forth"
-                        app:sliderAutoCycleEnabled="true"
-                        app:sliderIndicatorAnimationDuration="600"
-                        app:sliderIndicatorGravity="center_horizontal|bottom"
-                        app:sliderIndicatorMargin="15dp"
-                        app:sliderIndicatorOrientation="horizontal"
-                        app:sliderIndicatorPadding="3dp"
-                        app:sliderIndicatorRadius="2dp"
-                        app:sliderIndicatorSelectedColor="#5A5A5A"
-                        app:sliderIndicatorUnselectedColor="#FFF"
-                        app:sliderScrollTimeInSec="1"
-                        app:sliderStartAutoCycle="true" />
-
-                </androidx.cardview.widget.CardView>
             </LinearLayout>
 
             <androidx.cardview.widget.CardView
@@ -112,6 +80,9 @@
                 android:layout_below="@id/ll_main_image"
                 android:layout_marginTop="@dimen/_10sdp"
                 app:cardElevation="@dimen/_10sdp"
+                app:cardCornerRadius="@dimen/_8sdp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
                 >
                 <LinearLayout
                     android:layout_width="match_parent"

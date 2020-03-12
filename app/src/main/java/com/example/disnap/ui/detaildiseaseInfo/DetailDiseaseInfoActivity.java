@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.ceylonlabs.imageviewpopup.ImagePopup;
 import com.example.disnap.R;
 import com.example.disnap.data.adapter.ViewPagerAdapter;
 import com.example.disnap.data.pojo.Disease;
@@ -19,22 +21,25 @@ import com.example.disnap.ui.control.ControlFragment;
 import com.example.disnap.ui.indication.IndicationFragment;
 import com.example.disnap.ui.pesticide.PesticideFragment;
 import com.google.android.material.tabs.TabLayout;
+import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
 
 public class DetailDiseaseInfoActivity extends BaseActivity {
-    Intent intent;
-    Disease disease;
+    private Intent intent;
+    private Disease disease;
     private TextView name, latin;
     private ImageView btnBack, diseaseImg;
     private ViewPager viewPager;
     private TabLayout tabLayout;
-    Bundle bundle;
+    private Bundle bundle;
+    private ImagePopup imagePopup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_disease_info);
+       // Picasso.setSingletonInstance(new Picasso.Builder(this).build());
 
         findViews();
         initViews();
@@ -65,6 +70,19 @@ public class DetailDiseaseInfoActivity extends BaseActivity {
                     .load(disease.getUserImage())
                     .into(diseaseImg);
 
+
+            imagePopup = new ImagePopup(this);
+
+            imagePopup.setWindowHeight(800);
+            imagePopup.setWindowWidth(800);
+            imagePopup.setBackgroundColor(Color.BLACK);
+            imagePopup.setFullScreen(true);
+            imagePopup.setHideCloseIcon(true);
+            imagePopup.setImageOnClickClose(true);
+
+            imagePopup.initiatePopupWithGlide(disease.getUserImage());
+
+
             Log.d("TAG", "initViews: " + disease.getDiseaseName());
             showAllDetailDiseaseFragment(disease.getIndication(), disease.getControling(), disease.getPesticide());
         }
@@ -72,6 +90,13 @@ public class DetailDiseaseInfoActivity extends BaseActivity {
 
     @Override
     public void initListeners() {
+        diseaseImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imagePopup.viewPopup();
+            }
+        });
+
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
