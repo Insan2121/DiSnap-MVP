@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.disnap"
-        minSdkVersion 22
+        minSdkVersion 24
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -97,5 +97,8 @@ dependencies {
 
     //image popup
     implementation 'com.github.chathuralakmal:AndroidImagePopup:1.2.2'
+
+    //sliding screen
+    implementation 'com.matthew-tamlin:sliding-intro-screen:3.2.0'
 
 }

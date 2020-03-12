@@ -8,26 +8,25 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.disnap.R;
 import com.example.disnap.data.pojo.Disease;
+
 import java.util.ArrayList;
+
 import static com.yalantis.ucrop.UCropFragment.TAG;
 
 
 public class DiseaseAdapter extends RecyclerView.Adapter<DiseaseAdapter.ViewHolder> {
 
-   public interface OnItemClickListener {
+    public interface OnItemClickListener {
         void clickItem(Disease disease);
     }
 
     private ArrayList<Disease> mDisease;
     private OnItemClickListener onItemClickListener;
-
-
 
     public DiseaseAdapter(OnItemClickListener onItemClickListener) {
         mDisease = new ArrayList<>();
@@ -59,7 +58,6 @@ public class DiseaseAdapter extends RecyclerView.Adapter<DiseaseAdapter.ViewHold
                 onItemClickListener.clickItem(holder.mItem);
             }
         });
-
     }
 
     @Override
@@ -85,9 +83,6 @@ public class DiseaseAdapter extends RecyclerView.Adapter<DiseaseAdapter.ViewHold
             img = mView.findViewById(R.id.disease_image);
             name = mView.findViewById(R.id.disease_name);
             latin = mView.findViewById(R.id.disease_latin);
-
         }
     }
-
-
 }

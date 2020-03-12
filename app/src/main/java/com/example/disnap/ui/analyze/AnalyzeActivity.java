@@ -50,9 +50,7 @@ public class AnalyzeActivity extends BaseActivity implements AnalyzeView {
     private ImageView btnCamera;
     private Button btnAnalyze;
     private ImageView imageUser;
-    private DiseaseRepository diseaseRepository;
     private AnalyzePresenter analyzePresenter;
-    private ProgressBar progressBar;
     private static ActionBottomDialogFragment fragment = new ActionBottomDialogFragment();
     private int status = 0;
     private Handler handler = new Handler();
@@ -79,12 +77,11 @@ public class AnalyzeActivity extends BaseActivity implements AnalyzeView {
         btnCamera = findViewById(R.id.btn_new_image);
         btnAnalyze = findViewById(R.id.button_analyze);
         imageUser = findViewById(R.id.img_user);
-        progressBar = findViewById(R.id.progressBar);
     }
 
     @Override
     public void initViews() {
-        diseaseRepository = DataManager.getInstance().analyzeImageRepositoryRemote();
+        DiseaseRepository diseaseRepository = DataManager.getInstance().analyzeImageRepositoryRemote();
         analyzePresenter = new AnalyzePresenter(this, diseaseRepository);
     }
 
@@ -133,32 +130,23 @@ public class AnalyzeActivity extends BaseActivity implements AnalyzeView {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d("epe0", "onActivityResult: " + resultCode);
-        Log.d("epe01", "onActivityResult: " + resultCode);
         if (resultCode == RESULT_OK) {
-            Log.d("epe1", resultCode + "");
             if (requestCode == Constants.GALERY_REQUEST) {
-                Log.d("epe2", requestCode + "");
                 Uri a = data.getData();
-                Log.d("epe3", a.toString());
                 startCrop(a);
             } else if (requestCode == Constants.CAMERA_REQUEST) {
-                Log.d("epe4", requestCode + "");
                 Uri a = data.getData();
-                Log.d("epe5", a.toString());
                 startCrop(a);
             } else if (requestCode == Constants.CROP_REQUEST) {
-                Log.d("epe6", requestCode + "");
                 Uri c = UCrop.getOutput(Objects.requireNonNull(data));
                 String imgUri = getRealPathFromUri(c);
-                Log.d("epe7", Objects.requireNonNull(c).toString());
                 Intent intent = new Intent(this, AnalyzeActivity.class);
                 intent.putExtra("imageUri", imgUri);
                 startActivity(intent);
                 this.finish();
             }
         } else {
-            Toast.makeText(getApplicationContext(), "Ada yang salah", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "There is problem", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -184,20 +172,10 @@ public class AnalyzeActivity extends BaseActivity implements AnalyzeView {
         uCrop.withAspectRatio(1, 1);
         uCrop.withMaxResultSize(450, 450);
         uCrop.start(AnalyzeActivity.this, Constants.CROP_REQUEST);
-        Log.d("apa?", "crop ok");
     }
 
     @Override
     public void showResultAnalyze(Disease disease) {
-        Log.d(TAG, "0onResponse0: " + disease.getDiseaseName());
-        Log.d(TAG, "0onResponse1: " + disease.getDiseaseLatin());
-        Log.d(TAG, "0onResponse2: " + disease.getAccuration());
-        Log.d(TAG, "0onResponse3: " + disease.getResultImage());
-        Log.d(TAG, "0onResponse4: " + disease.getUserImage());
-        Log.d(TAG, "0onResponse5: " + disease.getIndication());
-        Log.d(TAG, "0onResponse6: " + disease.getControling());
-        Log.d(TAG, "0onResponse7: " + disease.getPesticide());
-        Log.d(TAG, "0onResponse8: " + disease.getDate());
         Intent intent = new Intent(AnalyzeActivity.this, ResultActivity.class);
         intent.putExtra("Result", (Parcelable) disease);
         startActivity(intent);
@@ -206,14 +184,11 @@ public class AnalyzeActivity extends BaseActivity implements AnalyzeView {
 
     @Override
     public void showLoading() {
-        //progressBar.setVisibility(View.VISIBLE);
         showDialog(AnalyzeActivity.this, "Success");
     }
 
     @Override
     public void hideLoading() {
-       // progressBar.setVisibility(View.GONE);
-        //showDialog(AnalyzeActivity.this, "Success");
 
     }
 
@@ -221,7 +196,7 @@ public class AnalyzeActivity extends BaseActivity implements AnalyzeView {
     public void showErrorMessage() {
     }
 
-    public void showDialog(Activity activity, String message){
+    public void showDialog(Activity activity, String message) {
         final Dialog dialog = new Dialog(activity, R.style.Widget_AppCompat_ProgressBar_Horizontal);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
@@ -268,7 +243,6 @@ public class AnalyzeActivity extends BaseActivity implements AnalyzeView {
     @Override
     protected void onPause() {
         super.onPause();
-
     }
 }
 

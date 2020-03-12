@@ -22,8 +22,7 @@ import com.example.disnap.data.pojo.Disease;
 import com.example.disnap.data.repository.DataManager;
 import com.example.disnap.data.repository.DiseaseRepository;
 import com.example.disnap.ui.base.BaseFragment;
-import com.example.disnap.ui.detaildiseaseInfo.DetailDiseaseInfoActivity;
-import com.example.disnap.util.SendDataToHistoryAdapter;
+import com.example.disnap.ui.historydetail.HistoryDetailActivity;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -38,7 +37,6 @@ import static com.yalantis.ucrop.UCropFragment.TAG;
 public class HistoryFragment extends BaseFragment implements HistoryView, HistoryAdapter.OnItemClickListener {
     private RecyclerView recyclerView;
     private HistoryAdapter historyAdapter;
-    private DiseaseRepository diseaseRepository;
     private HistoryPresenter historyPresenter;
     private LinearLayout llHistoryWarning;
 
@@ -46,7 +44,6 @@ public class HistoryFragment extends BaseFragment implements HistoryView, Histor
     public HistoryFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,7 +59,7 @@ public class HistoryFragment extends BaseFragment implements HistoryView, Histor
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        diseaseRepository = DataManager.getInstance().getDiseaseFromDB();
+        DiseaseRepository diseaseRepository = DataManager.getInstance().getDiseaseFromDB();
         historyPresenter = new HistoryPresenter(this, diseaseRepository);
         historyPresenter.getAllHistory();
     }
@@ -104,7 +101,6 @@ public class HistoryFragment extends BaseFragment implements HistoryView, Histor
         Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                //llHistoryWarning.setText(message);
                 llHistoryWarning.setVisibility(View.VISIBLE);
             }
         });
@@ -115,7 +111,7 @@ public class HistoryFragment extends BaseFragment implements HistoryView, Histor
         Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toasty.success(getContext(), message, Toasty.LENGTH_SHORT).show();
+                Toasty.success(Objects.requireNonNull(getContext()), message, Toasty.LENGTH_SHORT).show();
             }
         });
     }
@@ -125,7 +121,7 @@ public class HistoryFragment extends BaseFragment implements HistoryView, Histor
         Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toasty.error(getContext(), message, Toasty.LENGTH_SHORT).show();
+                Toasty.error(Objects.requireNonNull(getContext()), message, Toasty.LENGTH_SHORT).show();
             }
         });
     }
@@ -133,8 +129,8 @@ public class HistoryFragment extends BaseFragment implements HistoryView, Histor
     @Override
     public void clickItem(Disease disease) {
         Log.d("fak", "onDiseaseClicked: " + disease.getDiseaseName());
-        Intent intent = new Intent(getContext(), DetailDiseaseInfoActivity.class);
-        intent.putExtra("Data", (Parcelable) disease);
+        Intent intent = new Intent(getContext(), HistoryDetailActivity.class);
+        intent.putExtra("Result", (Parcelable) disease);
         startActivity(intent);
     }
 
@@ -142,4 +138,6 @@ public class HistoryFragment extends BaseFragment implements HistoryView, Histor
     public void clickRemoveButton(final Disease disease) {
         historyPresenter.removeHistory(disease);
     }
+
+
 }

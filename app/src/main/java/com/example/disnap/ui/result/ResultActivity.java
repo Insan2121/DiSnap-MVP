@@ -5,8 +5,10 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.disnap.data.adapter.ImageViewPagerAdapter;
@@ -29,8 +31,6 @@ public class ResultActivity extends BaseActivity implements ResultView {
     private TextView tvDiseaseName;
     private TextView tvLatinName;
     private TextView tvAccuration;
-    private ImageView imgResult;
-    private ImageView imgUser;
     private ImageView btnBack;
 
     private ViewPager viewPager;
@@ -38,6 +38,8 @@ public class ResultActivity extends BaseActivity implements ResultView {
 
     private ViewPager viewPagerImage;
     private WormDotsIndicator wormDotsIndicator;
+
+    private ProgressBar progressBar;
 
 
     @Override
@@ -56,8 +58,6 @@ public class ResultActivity extends BaseActivity implements ResultView {
         tvDiseaseName = findViewById(R.id.tv_result_name_disease_);
         tvLatinName = findViewById(R.id.tv_result_latin_disease);
         tvAccuration = findViewById(R.id.tv_result_accuration);
-        /*imgResult = findViewById(R.id.img_result_data);
-        imgUser = findViewById(R.id.img_result_user_photo);*/
 
         tabLayout = findViewById(R.id.tab_layout_result);
         viewPager = findViewById(R.id.view_pager_result);
@@ -65,6 +65,8 @@ public class ResultActivity extends BaseActivity implements ResultView {
 
         viewPagerImage = findViewById(R.id.viewPagerImage);
         wormDotsIndicator = findViewById(R.id.worm_dots_indicator);
+
+        progressBar = findViewById(R.id.pgAcuration);
 
     }
 
@@ -79,17 +81,14 @@ public class ResultActivity extends BaseActivity implements ResultView {
         tvLatinName.setText(disease.getDiseaseLatin());
         tvAccuration.setText(getPersentageResult(disease.getAccuration()));
 
-        /*Picasso.get()
-                .load(disease.getResultImage())
-                .into(imgResult);
+        int progress = (int) (disease.getAccuration() * 100);
+        Log.d("akurasicek", "initViews: " + progress);
+        progressBar.setProgress(progress, true);
 
+        String[][] urlImgAndDesc = {{disease.getResultImage(), "Result Image"}, {disease.getUserImage(), "Your Image"}};
+        Log.d("akurasicek12", "initViews: " + urlImgAndDesc[0][0] + urlImgAndDesc[1][0]);
 
-        Picasso.get()
-                .load(disease.getUserImage())
-                .into(imgUser);*/
-        String[] urlImg = {disease.getResultImage(), disease.getUserImage()};
-
-        ImageViewPagerAdapter imageViewPagerAdapter = new ImageViewPagerAdapter(this, urlImg);
+        ImageViewPagerAdapter imageViewPagerAdapter = new ImageViewPagerAdapter(this, urlImgAndDesc);
         viewPagerImage.setAdapter(imageViewPagerAdapter);
         wormDotsIndicator.setViewPager(viewPagerImage);
 

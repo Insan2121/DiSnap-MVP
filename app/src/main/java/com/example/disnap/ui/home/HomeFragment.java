@@ -41,20 +41,6 @@ public class HomeFragment extends BaseFragment implements HomeView, DiseaseAdapt
         // Required empty public constructor
     }
 
-/*    @Override
-    public void onStart() {
-        super.onStart();
-        presenter.populateDiseaseInfo();
-    }*/
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        /*if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }*/
-    }
 
     @Override
     public void findViews(View view) {
@@ -80,7 +66,6 @@ public class HomeFragment extends BaseFragment implements HomeView, DiseaseAdapt
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         findViews(view);
         initViews(view);
@@ -93,7 +78,7 @@ public class HomeFragment extends BaseFragment implements HomeView, DiseaseAdapt
         super.onViewCreated(view, savedInstanceState);
 
         DiseaseRepository diseaseRepository = DataManager.getInstance().getDiseaseFromJSON();
-        HomePresenter homePresenter = new HomePresenter(this,diseaseRepository);
+        HomePresenter homePresenter = new HomePresenter(this, diseaseRepository);
         homePresenter.getAllDiseaseInfo();
 
     }
@@ -103,12 +88,12 @@ public class HomeFragment extends BaseFragment implements HomeView, DiseaseAdapt
         diseaseAdapter.setValues(disease);
         Rak.entry("ListDiseaseTemp", disease);
 
-        if (Rak.grab("ListDiseaseTemp") != null){
+        if (Rak.grab("ListDiseaseTemp") != null) {
             ArrayList<Disease> diseases = new ArrayList<>();
             disease = Rak.grab("ListDiseaseTemp");
-            Log.d(TAG, "showDisease: "+disease.size());
-        }else {
-            Log.d(TAG, "showDisease: "+"no data");
+            Log.d(TAG, "showDisease: " + disease.size());
+        } else {
+            Log.d(TAG, "showDisease: " + "no data");
         }
     }
 
@@ -137,7 +122,6 @@ public class HomeFragment extends BaseFragment implements HomeView, DiseaseAdapt
 
     @Override
     public void clickItem(Disease disease) {
-        Log.d("fak", "onDiseaseClicked: "+disease.getDiseaseName());
         Intent intent = new Intent(getContext(), DetailDiseaseInfoActivity.class);
         intent.putExtra("Data", (Parcelable) disease);
         startActivity(intent);

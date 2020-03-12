@@ -21,25 +21,19 @@ import com.example.disnap.ui.control.ControlFragment;
 import com.example.disnap.ui.indication.IndicationFragment;
 import com.example.disnap.ui.pesticide.PesticideFragment;
 import com.google.android.material.tabs.TabLayout;
-import com.squareup.picasso.Picasso;
-
 import java.util.Objects;
 
 public class DetailDiseaseInfoActivity extends BaseActivity {
-    private Intent intent;
-    private Disease disease;
     private TextView name, latin;
     private ImageView btnBack, diseaseImg;
     private ViewPager viewPager;
     private TabLayout tabLayout;
-    private Bundle bundle;
     private ImagePopup imagePopup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_disease_info);
-       // Picasso.setSingletonInstance(new Picasso.Builder(this).build());
 
         findViews();
         initViews();
@@ -59,9 +53,9 @@ public class DetailDiseaseInfoActivity extends BaseActivity {
 
     @Override
     public void initViews() {
-        intent = getIntent();
+        Intent intent = getIntent();
         if (intent.getParcelableExtra("Data") != null) {
-            disease = intent.getParcelableExtra("Data");
+            Disease disease = intent.getParcelableExtra("Data");
             name.setText(Objects.requireNonNull(disease).getDiseaseName());
             latin.setText(disease.getDiseaseLatin());
 
@@ -116,7 +110,7 @@ public class DetailDiseaseInfoActivity extends BaseActivity {
         tabLayout.setupWithViewPager(viewPager);
 
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        bundle = new Bundle();
+        Bundle bundle;
 
         Fragment indicationFragment = new IndicationFragment();
         Fragment controlFragment = new ControlFragment();

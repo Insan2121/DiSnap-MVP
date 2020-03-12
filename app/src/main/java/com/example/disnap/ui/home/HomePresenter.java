@@ -18,12 +18,12 @@ class HomePresenter extends BasePresenter<HomeView> {
         this.diseaseRepository = diseaseRepository;
     }
 
-    void getAllDiseaseInfo(){
+    void getAllDiseaseInfo() {
         diseaseRepository.getDiseaseFromJSONFile(new DiseaseJSONFileDataCallListener(view));
     }
 
-    public static class DiseaseJSONFileDataCallListener implements DiseaseDataSource.LoadDiseaseFromJSONFileCallback{
-    private  WeakReference<HomeView> view;
+    public static class DiseaseJSONFileDataCallListener implements DiseaseDataSource.LoadDiseaseFromJSONFileCallback {
+        private WeakReference<HomeView> view;
 
         DiseaseJSONFileDataCallListener(HomeView view) {
             this.view = new WeakReference<>(view);

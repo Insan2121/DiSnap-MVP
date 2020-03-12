@@ -1,7 +1,5 @@
 package com.example.disnap.data.repository.local.database;
 
-import android.content.Context;
-
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
@@ -16,7 +14,7 @@ public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase instance;
 
-    public static AppDatabase getDatabaseInstance() {
+    static AppDatabase getDatabaseInstance() {
         if (instance == null) {
             instance = Room.databaseBuilder(App.getContext(), AppDatabase.class, "DiseaseDB")
                     .allowMainThreadQueries()

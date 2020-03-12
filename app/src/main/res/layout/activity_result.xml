@@ -57,7 +57,7 @@
                 <androidx.viewpager.widget.ViewPager
                     android:id="@+id/viewPagerImage"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_200sdp"
+                    android:layout_height="@dimen/_220sdp"
                     android:layout_marginBottom="@dimen/_8sdp"/>
 
                 <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
@@ -137,6 +137,16 @@
                                 android:textStyle="bold"/>
                         </LinearLayout>
                     </LinearLayout>
+
+                    <ProgressBar
+                        android:id="@+id/pgAcuration"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:progressDrawable="@drawable/progress_bar_horizontal"
+                        style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal"
+                        />
+
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 

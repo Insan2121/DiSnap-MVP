@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.Executor;
 
-import static com.yalantis.ucrop.UCropFragment.TAG;
-
 public class DiseaseDatabaseDataSource implements DiseaseDataSource {
     private Executor executor;
     private static DiseaseDatabaseDataSource instance;

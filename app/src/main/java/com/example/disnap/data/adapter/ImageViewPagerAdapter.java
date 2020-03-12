@@ -6,29 +6,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.bumptech.glide.Glide;
 import com.ceylonlabs.imageviewpopup.ImagePopup;
 import com.example.disnap.R;
 import com.squareup.picasso.Picasso;
 
 public class ImageViewPagerAdapter extends PagerAdapter {
     private Context context;
-    private LayoutInflater layoutInflater;
-    private String[] imgUrl;
+    private String[][] imgAndDesc;
 
-    public ImageViewPagerAdapter(Context context, String[] imgUrl) {
+    public ImageViewPagerAdapter(Context context, String[][] imgAndDesc) {
         this.context = context;
-        this.imgUrl = imgUrl;
+        this.imgAndDesc = imgAndDesc;
     }
 
     @Override
     public int getCount() {
-        return imgUrl.length;
+        return imgAndDesc.length;
     }
 
     @Override
@@ -39,19 +38,21 @@ public class ImageViewPagerAdapter extends PagerAdapter {
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, final int position) {
-        layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = layoutInflater.inflate(R.layout.custom_layout, null);
+        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = layoutInflater.inflate(R.layout.custom_result_analyze_image, null);
 
-        ImageView imageView = view.findViewById(R.id.imageView);
+        ImageView imageView = view.findViewById(R.id.img_view_res);
+        TextView textView = view.findViewById(R.id.tv_image_belong);
+
+        textView.setText(imgAndDesc[position][1]);
 
         Picasso.get()
-                .load(imgUrl[position])
+                .load(imgAndDesc[position][0])
                 .into(imageView);
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               //Picasso.setSingletonInstance(new Picasso.Builder(context).build());
                 ImagePopup imagePopup = new ImagePopup(context);
 
                 imagePopup.setWindowHeight(800);
@@ -61,9 +62,8 @@ public class ImageViewPagerAdapter extends PagerAdapter {
                 imagePopup.setHideCloseIcon(true);
                 imagePopup.setImageOnClickClose(true);
 
-                imagePopup.initiatePopupWithGlide(imgUrl[position]);
+                imagePopup.initiatePopupWithGlide(imgAndDesc[position][0]);
                 imagePopup.viewPopup();
-
             }
         });
 

@@ -21,7 +21,7 @@ public class DiseaseJSONFileDataSource implements DiseaseDataSource {
     private static DiseaseJSONFileDataSource instance;
 
     public static DiseaseJSONFileDataSource getInstance() {
-        if (instance == null){
+        if (instance == null) {
             instance = new DiseaseJSONFileDataSource();
         }
         return instance;
@@ -61,7 +61,7 @@ public class DiseaseJSONFileDataSource implements DiseaseDataSource {
                             diseases.addAll(insertData(response, "hama"));
                             diseases.addAll(insertData(response, "penyakit"));
                             callback.onDiseaseLoaded(diseases);
-                            Log.d(TAG, "onResponse11: "+diseases.size());
+                            Log.d(TAG, "onResponse11: " + diseases.size());
                         } catch (JSONException e) {
                             callback.onHideLoading();
                             e.printStackTrace();

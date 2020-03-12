@@ -38,7 +38,7 @@ public interface DiseaseDataSource {
         void onInsertError(String message);
     }
 
-       interface RemoveHistoryCallback {
+    interface RemoveHistoryCallback {
         void onRemoveSuccess(String message);
 
         void onRemoveFailed(String message);

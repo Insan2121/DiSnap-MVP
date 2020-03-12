@@ -15,7 +15,6 @@ class AnalyzePresenter extends BasePresenter<AnalyzeView> {
         this.diseaseRepository = diseaseRepository;
     }
 
-    // network
     void AnalyzeImageFromRemote(String url) {
         diseaseRepository.analyzeImage(new DiseaseCallListener(view), url);
     }

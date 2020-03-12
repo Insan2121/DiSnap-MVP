@@ -41,6 +41,7 @@ public class IndicationFragment extends BaseFragment {
 
     @Override
     public void initViews(View view) {
+        assert getArguments() != null;
         if (getArguments().getString("indication") != null) {
             String mIndication = getArguments().getString("indication");
             tIndication.setText(mIndication);

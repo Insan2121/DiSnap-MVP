@@ -22,7 +22,7 @@ class HistoryPresenter extends BasePresenter<HistoryView> {
         diseaseRepository.getDiseaseAnalysisResultFromDB(new DiseaseCallListener(view));
     }
 
-    void removeHistory(Disease disease){
+    void removeHistory(Disease disease) {
         diseaseRepository.removeHistoryFromDB(new DiseaseCallListener(view), disease);
     }
 
