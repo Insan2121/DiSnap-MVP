@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.disnap"
-        minSdkVersion 24
+        minSdkVersion 23
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -100,5 +100,11 @@ dependencies {
 
     //sliding screen
     implementation 'com.matthew-tamlin:sliding-intro-screen:3.2.0'
+
+    //sliding intro screen
+    implementation 'com.github.AppIntro:AppIntro:5.1.0'
+
+    //spotlight
+    implementation 'com.github.ujwalthote:MultiLamp:2.0'
 
 }

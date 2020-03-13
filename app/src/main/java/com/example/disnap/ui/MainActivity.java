@@ -4,16 +4,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
+import com.coderfolk.multilamp.customView.MultiLamp;
+import com.coderfolk.multilamp.model.Target;
+import com.coderfolk.multilamp.shapes.Circle;
 import com.example.disnap.App;
 import com.example.disnap.R;
 import com.example.disnap.ui.analyze.AnalyzeActivity;
@@ -24,10 +27,12 @@ import com.example.disnap.ui.home.HomeFragment;
 import com.example.disnap.ui.snap.SnapFragment;
 import com.example.disnap.util.Constants;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
 
@@ -48,13 +53,17 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Rak.initialize(getApplicationContext());
+        Rak.initialize(App.getContext());
         AndroidNetworking.initialize(App.getContext());
 
         findViews();
         initViews();
         initListeners();
         bottomNavigationView.setSelectedItemId(R.id.menu_home);
+
+        if (Rak.grab("spotlight") == null){
+            showSpotLight();
+        }
     }
 
     @Override
@@ -82,13 +91,8 @@ public class MainActivity extends BaseActivity {
                         selectedFragment = home;
                         break;
                     case R.id.menu_snap:
-                        // showBottomSheet();
-                        //showBottomSheetFragment();
                         selectedFragment = snapFragment;
                         showBottomSheetFragment();
-                        //selectedFragment = snapFragment;
-                        //showBottomSheet();
-
                         break;
                     case R.id.menu_history:
                         selectedFragment = history;
@@ -128,7 +132,7 @@ public class MainActivity extends BaseActivity {
                 this.finish();
             }
         } else {
-            Toast.makeText(getApplicationContext(), "Ada yang salah", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "There is something wrong", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -155,4 +159,31 @@ public class MainActivity extends BaseActivity {
         uCrop.withMaxResultSize(450, 450);
         uCrop.start(MainActivity.this, Constants.CROP_REQUEST);
     }
+
+    void showSpotLight(){
+        View viewHome = findViewById(R.id.menu_home);
+        View viewAnalyze = findViewById(R.id.menu_snap);
+        View viewHistory = findViewById(R.id.menu_history);
+        MultiLamp multiLamp = new MultiLamp(this);
+        ArrayList<Target> targets = new ArrayList<>();
+        targets.add(new Target(viewHome, "You can read \n" +
+                "list of chili \n" +
+                "disease information here", MultiLamp.TOP, new Circle(40)));
+
+        targets.add(new Target(viewAnalyze,"Let's you analyze \n" +
+                "image from camera \n" +
+                "or gallery to \n" +
+                "know the chili \n" +
+                "disease here", MultiLamp.TOP, new Circle(40)));
+
+        targets.add(new Target(viewHistory, "Let you look \n" +
+                "back you're analyze \n" +
+                "activity here", MultiLamp.TOP, new Circle(40)));
+        multiLamp.build(targets);
+
+        Rak.entry("spotlight", true);
+    }
+
+
+
 }

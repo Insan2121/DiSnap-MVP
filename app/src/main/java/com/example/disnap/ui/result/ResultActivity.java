@@ -83,7 +83,7 @@ public class ResultActivity extends BaseActivity implements ResultView {
 
         int progress = (int) (disease.getAccuration() * 100);
         Log.d("akurasicek", "initViews: " + progress);
-        progressBar.setProgress(progress, true);
+        progressBar.setProgress(progress);
 
         String[][] urlImgAndDesc = {{disease.getResultImage(), "Result Image"}, {disease.getUserImage(), "Your Image"}};
         Log.d("akurasicek12", "initViews: " + urlImgAndDesc[0][0] + urlImgAndDesc[1][0]);

@@ -24,4 +24,6 @@
     <string name="text_control">Pengendalian</string>
     <string name="replace_with_image">Replace with image</string>
     <string name="analyze_image">Analyze Image</string>
+    <string name="next">Next</string>
+    <string name="Tutup">Close</string>
 </resources>

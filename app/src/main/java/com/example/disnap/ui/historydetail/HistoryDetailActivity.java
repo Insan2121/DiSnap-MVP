@@ -78,7 +78,7 @@ public class HistoryDetailActivity extends BaseActivity {
         tvAccuration.setText(getPersentageResult(disease.getAccuration()));
 
         int progress = (int) (disease.getAccuration() * 100);
-        progressBar.setProgress(progress, true);
+        progressBar.setProgress(progress);
 
         String[][] urlImgAndDesc = {{disease.getResultImage(), "Result Image"}, {disease.getUserImage(), "Your Image"}};
 
