@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,6 +14,8 @@ import android.os.Handler;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -20,6 +24,7 @@ import com.example.disnap.data.adapter.DiseaseAdapter;
 import com.example.disnap.data.pojo.Disease;
 import com.example.disnap.data.repository.DataManager;
 import com.example.disnap.data.repository.DiseaseRepository;
+import com.example.disnap.ui.MainActivity;
 import com.example.disnap.ui.base.BaseFragment;
 import com.example.disnap.ui.detaildiseaseInfo.DetailDiseaseInfoActivity;
 import com.facebook.shimmer.ShimmerFrameLayout;
@@ -36,6 +41,7 @@ public class HomeFragment extends BaseFragment implements HomeView, DiseaseAdapt
     private DiseaseAdapter diseaseAdapter;
     private RecyclerView recyclerView;
     private ShimmerFrameLayout shimmerFrameLayout;
+    private Toolbar toolbar;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -44,12 +50,15 @@ public class HomeFragment extends BaseFragment implements HomeView, DiseaseAdapt
 
     @Override
     public void findViews(View view) {
+        toolbar = view.findViewById(R.id.toolbar);
         shimmerFrameLayout = view.findViewById(R.id.shimmer);
         recyclerView = view.findViewById(R.id.rc_disease_info);
     }
 
     @Override
     public void initViews(View view) {
+        //((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        ((MainActivity) getActivity()).getDelegate().setSupportActionBar(toolbar);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         diseaseAdapter = new DiseaseAdapter(this);
@@ -125,5 +134,15 @@ public class HomeFragment extends BaseFragment implements HomeView, DiseaseAdapt
         Intent intent = new Intent(getContext(), DetailDiseaseInfoActivity.class);
         intent.putExtra("Data", (Parcelable) disease);
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.about_menu) {
+            //Toast.makeText(this, "About clicked", Toast.LENGTH_SHORT).show();
+            Log.d("haha", "onOptionsItemSelected: "+"clicked");
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

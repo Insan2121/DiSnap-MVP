@@ -26,21 +26,21 @@ public class IntroActivity extends AppIntro {
         home.setTitle("Disease Information");
         home.setDescription("Dapatkan semua informasi mengenai berbagai penyakit pada tanaman cabai");
         home.setImageDrawable(R.drawable.intro_home);
-        home.setBgColor(R.color.colorRed);
+        home.setBgColor(getResources().getColor(R.color.colorGreen));
         addSlide(AppIntroFragment.newInstance(home));
 
         SliderPage analyze = new SliderPage();
         analyze.setTitle("Analyze Image");
         analyze.setDescription("Analisis penyakit melalui gambar dari kamera atau galeri anda");
         analyze.setImageDrawable(R.drawable.intro_analyze);
-        analyze.setBgColor(R.color.colorGreen);
+        analyze.setBgColor(getResources().getColor(R.color.colorGreen));
         addSlide(AppIntroFragment.newInstance(analyze));
 
         SliderPage history = new SliderPage();
         history.setTitle("History");
         history.setDescription("Cek kembali aktivitas kegiatan analisis anda");
         history.setImageDrawable(R.drawable.intro_history);
-        history.setBgColor(R.color.colorWhite);
+        history.setBgColor(getResources().getColor(R.color.colorGreen));
         addSlide(AppIntroFragment.newInstance(history));
 
         showSkipButton(true);

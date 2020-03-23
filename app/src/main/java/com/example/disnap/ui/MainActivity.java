@@ -13,9 +13,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+import androidx.appcompat.widget.Toolbar;
 
 import com.androidnetworking.AndroidNetworking;
 import com.coderfolk.multilamp.customView.MultiLamp;
@@ -51,6 +53,7 @@ public class MainActivity extends BaseActivity {
     private static FragmentTransaction fragmentTransaction;
     private SnapFragment snapFragment;
     private static ActionBottomDialogFragment fragment = new ActionBottomDialogFragment();
+    private Toolbar toolbar;
 
 
     @Override
@@ -73,16 +76,19 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void findViews() {
+        toolbar = findViewById(R.id.toolbar);
         bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setSelectedItemId(R.id.menu_home);
     }
 
     @Override
     public void initViews() {
+        setSupportActionBar(toolbar);
         home = new HomeFragment();
         history = new HistoryFragment();
         snapFragment = new SnapFragment();
         bottomNavigationView.setSelectedItemId(R.id.menu_home);
+
     }
 
     @Override
@@ -194,7 +200,7 @@ public class MainActivity extends BaseActivity {
         ArrayList<Target> targets = new ArrayList<>();
         targets.add(new Target(viewHome, "You can read \n" +
                 "list of chili \n" +
-                "disease information here", MultiLamp.TOP, new Circle(40)));
+                "disease information here", MultiLamp.RIGHT, new Circle(40)));
 
         targets.add(new Target(viewAnalyze,"Let's you analyze \n" +
                 "image from camera \n" +
@@ -204,11 +210,13 @@ public class MainActivity extends BaseActivity {
 
         targets.add(new Target(viewHistory, "Let you look \n" +
                 "back you're analyze \n" +
-                "activity here", MultiLamp.TOP, new Circle(40)));
+                "activity here", MultiLamp.LEFT, new Circle(40)));
         multiLamp.build(targets);
 
         Rak.entry("spotlight", true);
     }
+
+
 
 
 
