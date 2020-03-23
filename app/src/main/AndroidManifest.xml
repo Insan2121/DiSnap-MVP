@@ -7,8 +7,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -22,7 +21,8 @@
         android:roundIcon="@mipmap/ic_launcher_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.intro.IntroActivity"></activity>
+        <activity android:name=".ui.about.AboutActivity"></activity>
+        <activity android:name=".ui.intro.IntroActivity" />
         <activity android:name=".ui.historydetail.HistoryDetailActivity" />
         <activity android:name=".ui.splashscreen.SplashScreenActivity">
             <intent-filter>
@@ -35,7 +35,6 @@
         <activity android:name=".ui.analyze.AnalyzeActivity" />
         <activity android:name=".ui.detaildiseaseInfo.DetailDiseaseInfoActivity" />
         <activity android:name=".ui.MainActivity" />
-
 
         <provider
             android:name="androidx.core.content.FileProvider"

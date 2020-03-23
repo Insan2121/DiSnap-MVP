@@ -53,7 +53,7 @@ public class MainActivity extends BaseActivity {
     private static FragmentTransaction fragmentTransaction;
     private SnapFragment snapFragment;
     private static ActionBottomDialogFragment fragment = new ActionBottomDialogFragment();
-    private Toolbar toolbar;
+    //private Toolbar toolbar;
 
 
     @Override
@@ -76,14 +76,14 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void findViews() {
-        toolbar = findViewById(R.id.toolbar);
+        //toolbar = findViewById(R.id.toolbar);
         bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setSelectedItemId(R.id.menu_home);
     }
 
     @Override
     public void initViews() {
-        setSupportActionBar(toolbar);
+        //setSupportActionBar(toolbar);
         home = new HomeFragment();
         history = new HistoryFragment();
         snapFragment = new SnapFragment();
@@ -215,9 +215,5 @@ public class MainActivity extends BaseActivity {
 
         Rak.entry("spotlight", true);
     }
-
-
-
-
 
 }

@@ -27,4 +27,11 @@
     <string name="next">Next</string>
     <string name="Tutup">Close</string>
     <string name="about">About</string>
+    <string name="back">back</string>
+
+
+    <string name="website_bptp"><a href="http://jatim.litbang.pertanian.go.id"></a>Website BPTP</string>
+
+    <string
+        name="messageWithLink"><a href="https://www.google.com/">Tap here to open Link</a></string>
 </resources>

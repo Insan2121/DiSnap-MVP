@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,17 +13,17 @@ import android.os.Handler;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.disnap.R;
 import com.example.disnap.data.adapter.DiseaseAdapter;
 import com.example.disnap.data.pojo.Disease;
 import com.example.disnap.data.repository.DataManager;
 import com.example.disnap.data.repository.DiseaseRepository;
-import com.example.disnap.ui.MainActivity;
+import com.example.disnap.ui.about.AboutActivity;
 import com.example.disnap.ui.base.BaseFragment;
 import com.example.disnap.ui.detaildiseaseInfo.DetailDiseaseInfoActivity;
 import com.facebook.shimmer.ShimmerFrameLayout;
@@ -36,7 +35,7 @@ import io.isfaaghyth.rak.Rak;
 import static com.yalantis.ucrop.UCropFragment.TAG;
 
 
-public class HomeFragment extends BaseFragment implements HomeView, DiseaseAdapter.OnItemClickListener {
+public class HomeFragment extends BaseFragment implements HomeView, DiseaseAdapter.OnItemClickListener{
 
     private DiseaseAdapter diseaseAdapter;
     private RecyclerView recyclerView;
@@ -57,13 +56,30 @@ public class HomeFragment extends BaseFragment implements HomeView, DiseaseAdapt
 
     @Override
     public void initViews(View view) {
-        //((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        ((MainActivity) getActivity()).getDelegate().setSupportActionBar(toolbar);
+
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         diseaseAdapter = new DiseaseAdapter(this);
         recyclerView.setAdapter(diseaseAdapter);
         diseaseAdapter.notifyDataSetChanged();
+        toolbar.inflateMenu(R.menu.tool_bar_menu);
+
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                switch (item.getItemId()){
+                    case R.id.about_menu:
+                        Log.d("haha1", "onOptionsItemSelected: "+"clicked");
+                        Toast.makeText(getContext(), "About clicked", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getContext(), AboutActivity.class));
+                        return  true;
+                    default:
+                        break;
+                }
+                return true;
+            }
+        });
     }
 
     @Override
@@ -74,7 +90,6 @@ public class HomeFragment extends BaseFragment implements HomeView, DiseaseAdapt
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         findViews(view);
         initViews(view);
@@ -96,7 +111,6 @@ public class HomeFragment extends BaseFragment implements HomeView, DiseaseAdapt
     public void showDisease(ArrayList<Disease> disease) {
         diseaseAdapter.setValues(disease);
         Rak.entry("ListDiseaseTemp", disease);
-
         if (Rak.grab("ListDiseaseTemp") != null) {
             ArrayList<Disease> diseases = new ArrayList<>();
             disease = Rak.grab("ListDiseaseTemp");
@@ -126,7 +140,6 @@ public class HomeFragment extends BaseFragment implements HomeView, DiseaseAdapt
 
     @Override
     public void showErrorMessage() {
-
     }
 
     @Override
@@ -136,13 +149,4 @@ public class HomeFragment extends BaseFragment implements HomeView, DiseaseAdapt
         startActivity(intent);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.about_menu) {
-            //Toast.makeText(this, "About clicked", Toast.LENGTH_SHORT).show();
-            Log.d("haha", "onOptionsItemSelected: "+"clicked");
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 }

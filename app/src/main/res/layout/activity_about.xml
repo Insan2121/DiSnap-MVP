@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingEnd="@dimen/_20sdp"
+    android:paddingStart="@dimen/_20sdp"
+    tools:context=".ui.about.AboutActivity">
+
+    <TextView
+        android:id="@+id/textTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginVertical="@dimen/_50sdp"
+        android:textStyle="bold"
+        android:textSize="@dimen/_30ssp"
+        android:text="DiSnap"/>
+    <TextView
+        android:id="@+id/textVersion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textTitle"
+        android:text="Version 1.0.0"
+        />
+
+    <TextView
+        android:id="@+id/textDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_40sdp"
+        android:text="Selamat Datang di Aplikasi DiSnap. DiSnap adalah aplikasi untuk mendeteksi penyakit pada tanaman cabai. "
+        app:layout_constraintLeft_toLeftOf="@id/textVersion"
+        app:layout_constraintRight_toRightOf="@id/textVersion"
+        app:layout_constraintTop_toBottomOf="@id/textVersion" />
+
+    <TextView
+        android:id="@+id/linkBPTP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textDescription"
+        android:layout_marginTop="@dimen/_50sdp"
+        android:text="@string/website_bptp"
+        android:textColor="@color/colorGreen"
+        android:clickable="true"
+        android:autoLink="all"
+        android:linksClickable="true"/>
+
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="@dimen/_50sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linkBPTP"
+        android:text="@string/back"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
