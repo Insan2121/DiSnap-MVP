@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.provider.Settings;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
 import com.example.disnap.R;
@@ -35,10 +37,16 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.karumi.dexter.listener.single.PermissionListener;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 import es.dmoral.toasty.Toasty;
+
+import static com.yalantis.ucrop.UCropFragment.TAG;
 
 
 /**
@@ -139,10 +147,121 @@ public class ActionBottomDialogFragment extends BottomSheetDialogFragment implem
 
     //fungsi membuka camera
     private void openCamera() {
+        /*Intent i = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+
+        File file=getOutputMediaFile(1);
+        Uri picUri = Uri.fromFile(file); // create
+        String c = picUri.toString();
+        Log.d(TAG, "openCamera: "+picUri.toString());
+        i.putExtra("thisURI",c); // set the image file
+        getActivity().startActivityForResult(i, Constants.CAMERA_REQUEST);*/
+
+
+
+        /*Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getContext().getPackageManager()) != null) {
+            getActivity().startActivityForResult(takePictureIntent, Constants.CAMERA_REQUEST);
+        }*/
+/*
+
+
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(Objects.requireNonNull(getContext()).getPackageManager()) != null) {
-            Objects.requireNonNull(getActivity()).startActivityForResult(takePictureIntent, Constants.CAMERA_REQUEST);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getContext().getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(getContext(),
+                        "com.example.disnap.fileprovider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                getActivity().startActivityForResult(takePictureIntent, Constants.CAMERA_REQUEST);
+            }
+        }*/
+
+
+
+        /*Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        File photo = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+                String.valueOf(System.currentTimeMillis()) + ".jpg");
+        intent.putExtra(MediaStore.EXTRA_OUTPUT,
+                Uri.fromFile(photo));
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+        //imageUri = Uri.fromFile(photo);
+         getActivity().startActivityForResult(intent, Constants.CAMERA_REQUEST);*/
+
+
+        Intent pictureIntent = new Intent(
+                MediaStore.ACTION_IMAGE_CAPTURE
+        );
+        if(pictureIntent.resolveActivity(getContext().getPackageManager()) != null) {
+            getActivity().startActivityForResult(pictureIntent,
+                    Constants.CAMERA_REQUEST);
         }
+    }
+
+    //fungsi mengambil foto
+    private void takePicture(int image){
+        //1 depan, 2 kiri. 3 kanan;
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        File photo = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+                String.valueOf(System.currentTimeMillis()) + ".jpg");
+        intent.putExtra(MediaStore.EXTRA_OUTPUT,
+                Uri.fromFile(photo));
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+        //imageUri = Uri.fromFile(photo);
+       // startActivityForResult(intent, CAMERA_REQUEST);
+    }
+
+    /** Create a File for saving an image */
+    private  File getOutputMediaFile(int type){
+        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES), "MyApplication");
+
+        /**Create the storage directory if it does not exist*/
+        if (! mediaStorageDir.exists()){
+            if (! mediaStorageDir.mkdirs()){
+                return null;
+            }
+        }
+
+        /**Create a media file name*/
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        File mediaFile;
+        if (type == 1){
+            mediaFile = new File(mediaStorageDir.getPath() + File.separator +
+                    "IMG_"+ timeStamp + ".png");
+        } else {
+            return null;
+        }
+
+        return mediaFile;
+    }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        String currentPhotoPath = image.getAbsolutePath();
+        return image;
     }
 
     //fungsi membuka gallery
@@ -180,5 +299,6 @@ public class ActionBottomDialogFragment extends BottomSheetDialogFragment implem
         intent.setData(uri);
         startActivityForResult(intent, 101);
     }
+
 }
 

@@ -4,11 +4,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -30,6 +34,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import com.yalantis.ucrop.UCrop;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -116,15 +121,29 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.d("shit1", "onActivityResult: "+requestCode);
         if (resultCode == RESULT_OK) {
             if (requestCode == Constants.GALERY_REQUEST) {
                 Uri a = Objects.requireNonNull(data).getData();
                 startCrop(Objects.requireNonNull(a));
             } else if (requestCode == Constants.CAMERA_REQUEST) {
-                Uri a = Objects.requireNonNull(data).getData();
-                startCrop(Objects.requireNonNull(a));
+                Log.d("shit2", "onActivityResult: "+requestCode);
+                Log.d("shit3", "onActivityResult: "+Constants.CAMERA_REQUEST);
+                if (data != null && data.getExtras() != null) {
+                    Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
+                    Log.d("shit22", "onActivityResult: "+imageBitmap.toString());
+                    Uri a = getImageUri(this, imageBitmap);
+                    Log.d("shit33", "onActivityResult: "+a.toString());
+                    startCrop(a);
+                }else {
+                    Toast.makeText(this, "Njingggg lah", Toast.LENGTH_SHORT).show();
+                }
             } else if (requestCode == Constants.CROP_REQUEST) {
-                Uri c = UCrop.getOutput(Objects.requireNonNull(data));
+                Log.d("cah0", "onActivityResult: "+requestCode);
+                Log.d("cah1", "onActivityResult: "+Constants.CROP_REQUEST);
+                Uri c = UCrop.getOutput(data);
+                Log.d("cah2", "onActivityResult: "+c);
+                Log.d("cah3", "onActivityResult: "+c.toString());
                 String imgUri = getRealPathFromUri(c);
                 Intent intent = new Intent(this, AnalyzeActivity.class);
                 intent.putExtra("imageUri", imgUri);
@@ -134,6 +153,13 @@ public class MainActivity extends BaseActivity {
         } else {
             Toast.makeText(getApplicationContext(), "There is something wrong", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
     }
 
     private String getRealPathFromUri(Uri uri) {

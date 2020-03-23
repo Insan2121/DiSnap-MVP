@@ -1,5 +1,6 @@
 package com.example.disnap.ui.detaildiseaseInfo;
 
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -29,6 +31,7 @@ public class DetailDiseaseInfoActivity extends BaseActivity {
     private ViewPager viewPager;
     private TabLayout tabLayout;
     private ImagePopup imagePopup;
+    private ScrollView scroll;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,7 @@ public class DetailDiseaseInfoActivity extends BaseActivity {
     public void findViews() {
         viewPager = findViewById(R.id.view_pager);
         tabLayout = findViewById(R.id.tab_layout);
+        //scroll = findViewById(R.id.nested_scroll);
 
         name = findViewById(R.id.tv_name_disease_info_detail);
         latin = findViewById(R.id.tv_latin_disease_info_detail);
@@ -53,6 +57,8 @@ public class DetailDiseaseInfoActivity extends BaseActivity {
 
     @Override
     public void initViews() {
+        //scroll.setFillViewport(true);
+
         Intent intent = getIntent();
         if (intent.getParcelableExtra("Data") != null) {
             Disease disease = intent.getParcelableExtra("Data");

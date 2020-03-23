@@ -93,7 +93,6 @@ public class ResultActivity extends BaseActivity implements ResultView {
         wormDotsIndicator.setViewPager(viewPagerImage);
 
         showAllDetailDiseaseFragment(disease.getIndication(), disease.getControling(), disease.getPesticide());
-
     }
 
     @Override

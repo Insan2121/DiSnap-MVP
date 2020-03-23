@@ -90,7 +90,7 @@ public class DiseaseRemoteDataSource implements DiseaseDataSource {
         AndroidNetworking.post(Constants.clarifaiAPI)
                 .setPriority(Priority.IMMEDIATE)
                 .addHeaders("Authorization", Constants.authClarifai)
-                .addHeaders("Content-Type", "application/json")
+                .addHeaders("Content-Type", Constants.CONTENT_TYPE)
                 .addJSONObjectBody(this.getBody(url))
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {

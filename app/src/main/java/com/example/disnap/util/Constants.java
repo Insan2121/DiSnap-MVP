@@ -7,5 +7,6 @@ public class Constants {
     public static final String uimgurAPI = "https://api.imgur.com/3/upload";
     public static final String clarifaiAPI = "https://api.clarifai.com/v2/models/Prediksi Penyakit/outputs";
     public static final String authImgur = "Client-ID a1e858428f9c47a";
-    public static final String authClarifai = "Key 9470170135744012a95477707c5b1056";
+    public static final String authClarifai = "Key e9de4a55070b412cac26b2b769658b90";
+    public static final String CONTENT_TYPE = "application/json";
 }
