@@ -9,4 +9,5 @@ public class Constants {
     public static final String authImgur = "Client-ID a1e858428f9c47a";
     public static final String authClarifai = "Key e9de4a55070b412cac26b2b769658b90";
     public static final String CONTENT_TYPE = "application/json";
+    public static final String LINK_BPTP = "http://jatim.litbang.pertanian.go.id";
 }
