@@ -23,7 +23,7 @@ android {
 }
 
 dependencies {
-    def room_version = "2.2.4"
+    def room_version = "2.2.5"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -104,7 +104,5 @@ dependencies {
     //sliding intro screen
     implementation 'com.github.AppIntro:AppIntro:5.1.0'
 
-    //spotlight
-    implementation 'com.github.ujwalthote:MultiLamp:2.0'
 
 }

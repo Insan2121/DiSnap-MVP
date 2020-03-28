@@ -13,16 +13,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
-import androidx.appcompat.widget.Toolbar;
 
 import com.androidnetworking.AndroidNetworking;
-import com.coderfolk.multilamp.customView.MultiLamp;
-import com.coderfolk.multilamp.model.Target;
-import com.coderfolk.multilamp.shapes.Circle;
 import com.example.disnap.App;
 import com.example.disnap.R;
 import com.example.disnap.ui.analyze.AnalyzeActivity;
@@ -68,10 +62,6 @@ public class MainActivity extends BaseActivity {
         initViews();
         initListeners();
         bottomNavigationView.setSelectedItemId(R.id.menu_home);
-
-        if (Rak.grab("spotlight") == null){
-            showSpotLight();
-        }
     }
 
     @Override
@@ -191,29 +181,4 @@ public class MainActivity extends BaseActivity {
         uCrop.withMaxResultSize(450, 450);
         uCrop.start(MainActivity.this, Constants.CROP_REQUEST);
     }
-
-    void showSpotLight(){
-        View viewHome = findViewById(R.id.menu_home);
-        View viewAnalyze = findViewById(R.id.menu_snap);
-        View viewHistory = findViewById(R.id.menu_history);
-        MultiLamp multiLamp = new MultiLamp(this);
-        ArrayList<Target> targets = new ArrayList<>();
-        targets.add(new Target(viewHome, "You can read \n" +
-                "list of chili \n" +
-                "disease information here", MultiLamp.RIGHT, new Circle(40)));
-
-        targets.add(new Target(viewAnalyze,"Let's you analyze \n" +
-                "image from camera \n" +
-                "or gallery to \n" +
-                "know the chili \n" +
-                "disease here", MultiLamp.TOP, new Circle(40)));
-
-        targets.add(new Target(viewHistory, "Let you look \n" +
-                "back you're analyze \n" +
-                "activity here", MultiLamp.LEFT, new Circle(40)));
-        multiLamp.build(targets);
-
-        Rak.entry("spotlight", true);
     }
-
-}

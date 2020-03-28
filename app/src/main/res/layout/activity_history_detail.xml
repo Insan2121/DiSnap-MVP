@@ -172,7 +172,7 @@
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/view_pager_result"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_180sdp"
+                android:layout_height="@dimen/_500sdp"
                 android:layout_below="@id/tab_layout_result"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
