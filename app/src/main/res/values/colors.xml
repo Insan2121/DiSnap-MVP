@@ -9,4 +9,5 @@
     <color name="colorBackGround">#F3F3F3</color>
     <color name="colorRed">#E93232</color>
     <color name="colorTrans"></color>
+    <color name="colorRedForBar">#E35252</color>
 </resources>

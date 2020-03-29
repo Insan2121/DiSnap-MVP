@@ -33,6 +33,7 @@ import com.example.disnap.data.repository.DiseaseRepository;
 import com.example.disnap.ui.base.BaseActivity;
 import com.example.disnap.ui.bottomsheetdialog.ActionBottomDialogFragment;
 import com.example.disnap.ui.result.ResultActivity;
+import com.example.disnap.util.Connectivity;
 import com.example.disnap.util.Constants;
 import com.yalantis.ucrop.UCrop;
 
@@ -42,8 +43,6 @@ import java.util.Date;
 import java.util.Objects;
 
 import io.isfaaghyth.rak.Rak;
-
-import static com.yalantis.ucrop.UCropFragment.TAG;
 
 public class AnalyzeActivity extends BaseActivity implements AnalyzeView {
     private ImageView btnBack;
@@ -66,8 +65,6 @@ public class AnalyzeActivity extends BaseActivity implements AnalyzeView {
         findViews();
         initViews();
         initListeners();
-
-
     }
 
     @Override
@@ -101,7 +98,6 @@ public class AnalyzeActivity extends BaseActivity implements AnalyzeView {
             }
         });
 
-
         Intent intent = getIntent();
         if (intent != null) {
             final String img = intent.getStringExtra("imageUri");
@@ -114,7 +110,12 @@ public class AnalyzeActivity extends BaseActivity implements AnalyzeView {
             btnAnalyze.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    analyzePresenter.AnalyzeImageFromRemote(img);
+                    if (Connectivity.isNetworkAvailable(AnalyzeActivity.this)){
+                        analyzePresenter.AnalyzeImageFromRemote(img);
+                    }
+                    else {
+                        Toast.makeText(AnalyzeActivity.this, "Check your internet connection", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
         } else {
@@ -184,7 +185,7 @@ public class AnalyzeActivity extends BaseActivity implements AnalyzeView {
 
     @Override
     public void showLoading() {
-        showDialog(AnalyzeActivity.this, "Success");
+        showDialog(AnalyzeActivity.this);
     }
 
     @Override
@@ -196,7 +197,7 @@ public class AnalyzeActivity extends BaseActivity implements AnalyzeView {
     public void showErrorMessage() {
     }
 
-    public void showDialog(Activity activity, String message) {
+    public void showDialog(Activity activity) {
         final Dialog dialog = new Dialog(activity, R.style.Widget_AppCompat_ProgressBar_Horizontal);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
@@ -210,11 +211,9 @@ public class AnalyzeActivity extends BaseActivity implements AnalyzeView {
             @Override
             public void run() {
                 while (status < 100) {
-
                     status += 1;
-
                     try {
-                        Thread.sleep(50);
+                        Thread.sleep(100);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

@@ -5,6 +5,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -21,6 +22,7 @@ import com.example.disnap.ui.pesticide.PesticideFragment;
 import com.google.android.material.tabs.TabLayout;
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
 
+import java.text.DecimalFormat;
 import java.util.Objects;
 
 public class HistoryDetailActivity extends BaseActivity {
@@ -130,6 +132,9 @@ public class HistoryDetailActivity extends BaseActivity {
 
     public String getPersentageResult(double value) {
         double result = value * 100;
-        return Double.toString(result);
+        //return Double.toString(result);
+        Log.d("sun1", "getPersentageResult: "+result);
+        Log.d("sun2", "getPersentageResult: "+new DecimalFormat("##.##").format(result));
+        return new DecimalFormat("##.##").format(result);
     }
 }
