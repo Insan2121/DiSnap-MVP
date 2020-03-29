@@ -10,12 +10,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.ceylonlabs.imageviewpopup.ImagePopup;
 import com.example.disnap.R;
+import com.example.disnap.data.adapter.HeightWrappingViewPager;
 import com.example.disnap.data.adapter.ViewPagerAdapter;
 import com.example.disnap.data.pojo.Disease;
 import com.example.disnap.ui.base.BaseActivity;
@@ -28,10 +30,9 @@ import java.util.Objects;
 public class DetailDiseaseInfoActivity extends BaseActivity {
     private TextView name, latin;
     private ImageView btnBack, diseaseImg;
-    private ViewPager viewPager;
+    private HeightWrappingViewPager viewPager;
     private TabLayout tabLayout;
     private ImagePopup imagePopup;
-    private ScrollView scroll;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,6 @@ public class DetailDiseaseInfoActivity extends BaseActivity {
     public void findViews() {
         viewPager = findViewById(R.id.view_pager);
         tabLayout = findViewById(R.id.tab_layout);
-        //scroll = findViewById(R.id.nested_scroll);
 
         name = findViewById(R.id.tv_name_disease_info_detail);
         latin = findViewById(R.id.tv_latin_disease_info_detail);
@@ -57,8 +57,6 @@ public class DetailDiseaseInfoActivity extends BaseActivity {
 
     @Override
     public void initViews() {
-        //scroll.setFillViewport(true);
-
         Intent intent = getIntent();
         if (intent.getParcelableExtra("Data") != null) {
             Disease disease = intent.getParcelableExtra("Data");
@@ -70,7 +68,6 @@ public class DetailDiseaseInfoActivity extends BaseActivity {
                     .load(disease.getUserImage())
                     .into(diseaseImg);
 
-
             imagePopup = new ImagePopup(this);
 
             imagePopup.setWindowHeight(800);
@@ -81,7 +78,6 @@ public class DetailDiseaseInfoActivity extends BaseActivity {
             imagePopup.setImageOnClickClose(true);
 
             imagePopup.initiatePopupWithGlide(disease.getUserImage());
-
 
             Log.d("TAG", "initViews: " + disease.getDiseaseName());
             showAllDetailDiseaseFragment(disease.getIndication(), disease.getControling(), disease.getPesticide());
@@ -138,6 +134,7 @@ public class DetailDiseaseInfoActivity extends BaseActivity {
 
         //set adapter on viewpager
         viewPager.setAdapter(viewPagerAdapter);
+        viewPager.measure(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
     }
 
 }

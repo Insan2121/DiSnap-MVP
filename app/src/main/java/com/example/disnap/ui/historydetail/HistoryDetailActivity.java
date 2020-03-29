@@ -8,10 +8,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.disnap.R;
+import com.example.disnap.data.adapter.HeightWrappingViewPager;
 import com.example.disnap.data.adapter.ImageViewPagerAdapter;
 import com.example.disnap.data.adapter.ViewPagerAdapter;
 import com.example.disnap.data.pojo.Disease;
@@ -32,7 +34,7 @@ public class HistoryDetailActivity extends BaseActivity {
     private TextView tvAccuration;
     private ImageView btnBack;
 
-    private ViewPager viewPager;
+    private HeightWrappingViewPager viewPager;
     private TabLayout tabLayout;
 
     private ViewPager viewPagerImage;
@@ -128,6 +130,7 @@ public class HistoryDetailActivity extends BaseActivity {
 
         //set adapter on viewpager
         viewPager.setAdapter(viewPagerAdapter);
+        viewPager.measure(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
     }
 
     public String getPersentageResult(double value) {
