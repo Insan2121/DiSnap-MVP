@@ -38,9 +38,9 @@ public class DiseaseDatabaseDataSource implements DiseaseDataSource {
                 Log.d("cekstatusinsert", status + "");
                 presentDataSize = getDataSize();
                 if (presentDataSize > prevDataSize) {
-                    callback.onInsertSuccess("Success to Added");
+                    callback.onInsertSuccess("Hasil analisis dapat dilihat di menu riwayat");
                 } else {
-                    callback.onInsertError("Failed to Added");
+                    callback.onInsertError("Gagal memasukan hasil analsisi ke dalam database");
                 }
             }
         };
