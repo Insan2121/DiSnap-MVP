@@ -117,15 +117,15 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     private void showAlertDialog(final int position, final Disease disease) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Remove");
-        builder.setMessage("Do you want to remove this history?");
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        builder.setMessage("Apakah anda yakin ingin menghapus riwayat ini?");
+        builder.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 itemClickListener.clickRemoveButton(disease);
                 removeHistoryItem(position);
             }
         })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();

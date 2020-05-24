@@ -114,7 +114,7 @@ public class AnalyzeActivity extends BaseActivity implements AnalyzeView {
                         analyzePresenter.AnalyzeImageFromRemote(img);
                     }
                     else {
-                        Toast.makeText(AnalyzeActivity.this, "Check your internet connection", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AnalyzeActivity.this, "Periksa koneksi internet anda", Toast.LENGTH_SHORT).show();
                     }
                 }
             });

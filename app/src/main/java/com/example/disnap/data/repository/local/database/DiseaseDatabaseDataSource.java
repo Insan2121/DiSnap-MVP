@@ -56,9 +56,9 @@ public class DiseaseDatabaseDataSource implements DiseaseDataSource {
                 AppDatabase.getDatabaseInstance().diseaseDAO().delete(disease);
                 presentDataSize = getDataSize();
                 if (presentDataSize < prevDataSize) {
-                    callback.onRemoveSuccess("Remove success");
+                    callback.onRemoveSuccess("Riwayat berhasil dihapus");
                 } else {
-                    callback.onRemoveFailed("Remove Failed");
+                    callback.onRemoveFailed("Riwayat gagal dihapus");
                 }
             }
         };
@@ -80,7 +80,7 @@ public class DiseaseDatabaseDataSource implements DiseaseDataSource {
                 if (diseases.size() != 0) {
                     callback.onDiseaseLoaded(diseases);
                 } else {
-                    callback.onError("You have no story activity yet");
+                    callback.onError("Tidak ada riwayat deteksi");
                 }
             }
         };

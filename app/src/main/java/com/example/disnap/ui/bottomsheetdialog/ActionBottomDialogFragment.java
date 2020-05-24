@@ -147,58 +147,6 @@ public class ActionBottomDialogFragment extends BottomSheetDialogFragment implem
 
     //fungsi membuka camera
     private void openCamera() {
-        /*Intent i = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-
-        File file=getOutputMediaFile(1);
-        Uri picUri = Uri.fromFile(file); // create
-        String c = picUri.toString();
-        Log.d(TAG, "openCamera: "+picUri.toString());
-        i.putExtra("thisURI",c); // set the image file
-        getActivity().startActivityForResult(i, Constants.CAMERA_REQUEST);*/
-
-
-
-        /*Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getContext().getPackageManager()) != null) {
-            getActivity().startActivityForResult(takePictureIntent, Constants.CAMERA_REQUEST);
-        }*/
-/*
-
-
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Ensure that there's a camera activity to handle the intent
-        if (takePictureIntent.resolveActivity(getContext().getPackageManager()) != null) {
-            // Create the File where the photo should go
-            File photoFile = null;
-            try {
-                photoFile = createImageFile();
-            } catch (IOException ex) {
-                // Error occurred while creating the File
-            }
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(getContext(),
-                        "com.example.disnap.fileprovider",
-                        photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                getActivity().startActivityForResult(takePictureIntent, Constants.CAMERA_REQUEST);
-            }
-        }*/
-
-
-
-        /*Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        File photo = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-                String.valueOf(System.currentTimeMillis()) + ".jpg");
-        intent.putExtra(MediaStore.EXTRA_OUTPUT,
-                Uri.fromFile(photo));
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-        StrictMode.setVmPolicy(builder.build());
-        //imageUri = Uri.fromFile(photo);
-         getActivity().startActivityForResult(intent, Constants.CAMERA_REQUEST);*/
-
-
         Intent pictureIntent = new Intent(
                 MediaStore.ACTION_IMAGE_CAPTURE
         );
@@ -219,8 +167,6 @@ public class ActionBottomDialogFragment extends BottomSheetDialogFragment implem
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
-        //imageUri = Uri.fromFile(photo);
-       // startActivityForResult(intent, CAMERA_REQUEST);
     }
 
     /** Create a File for saving an image */

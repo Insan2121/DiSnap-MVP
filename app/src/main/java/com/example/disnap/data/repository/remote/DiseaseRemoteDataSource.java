@@ -124,16 +124,6 @@ public class DiseaseRemoteDataSource implements DiseaseDataSource {
                                         disease.setControling(diseaseArrayList.get(i).getControling());
                                         disease.setPesticide(diseaseArrayList.get(i).getPesticide());
                                         disease.setDate(formattedDate);
-
-                                        Log.d(TAG, "onResponse0: " + disease.getDiseaseName());
-                                        Log.d(TAG, "onResponse1: " + disease.getDiseaseLatin());
-                                        Log.d(TAG, "onResponse2: " + disease.getAccuration());
-                                        Log.d(TAG, "onResponse3: " + disease.getResultImage());
-                                        Log.d(TAG, "onResponse4: " + disease.getUserImage());
-                                        Log.d(TAG, "onResponse5: " + disease.getIndication());
-                                        Log.d(TAG, "onResponse6: " + disease.getControling());
-                                        Log.d(TAG, "onResponse7: " + disease.getPesticide());
-                                        Log.d(TAG, "onResponse8: " + disease.getDate());
                                         callback.onAnalyzeSuccess(disease);
                                     }
                                 }

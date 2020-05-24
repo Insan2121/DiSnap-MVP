@@ -3,8 +3,10 @@ package com.example.disnap.ui.splashscreen;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
@@ -24,20 +26,17 @@ public class SplashScreenActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-
-        Rak.initialize(App.getContext());
-
-        if (Rak.grab("intro") == null){
-            goToIntroApp();
-        }else {
-            boolean a = Rak.grab("intro");
-            Log.d("cek", "onCreate: "+a);
+        
+        if (getPrefIntro()){
             goToMainMenu();
+        }else {
+            goToIntroApp();
         }
+
     }
 
     void goToIntroApp(){
-        Rak.entry("intro", true);
+        setPrefIntro();
         handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -59,6 +58,23 @@ public class SplashScreenActivity extends AppCompatActivity {
                 finish();
             }
         }, 3000);
+    }
+
+    void setPrefIntro(){
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPref", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("intro",true);
+        editor.apply();
+    }
+
+    boolean getPrefIntro(){
+        SharedPreferences preferences = getSharedPreferences("MyPref", MODE_PRIVATE);
+        boolean status = preferences.getBoolean("intro",false );
+        if (status){
+            return true;
+        }else {
+            return false;
+        }
     }
 
 

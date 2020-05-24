@@ -103,7 +103,7 @@ public class HistoryDetailActivity extends BaseActivity {
         });
     }
 
-    void showAllDetailDiseaseFragment(String mIndication, String mControl, String mPesticide) {
+    private void showAllDetailDiseaseFragment(String mIndication, String mControl, String mPesticide) {
         //attach tablayout with viewpager
         tabLayout.setupWithViewPager(viewPager);
 
@@ -133,7 +133,7 @@ public class HistoryDetailActivity extends BaseActivity {
         viewPager.measure(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
     }
 
-    public String getPersentageResult(double value) {
+    private String getPersentageResult(double value) {
         double result = value * 100;
         //return Double.toString(result);
         Log.d("sun1", "getPersentageResult: "+result);

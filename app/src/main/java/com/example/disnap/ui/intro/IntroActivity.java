@@ -31,7 +31,7 @@ public class IntroActivity extends AppIntro {
 
         SliderPage analyze = new SliderPage();
         analyze.setTitle("Analyze Image");
-        analyze.setDescription("Analisis penyakit melalui gambar dari kamera atau galeri anda");
+        analyze.setDescription("Analisis penyakit pada tanaman cabai melalui gambar daun tanaman cabai dari kamera atau galeri anda");
         analyze.setImageDrawable(R.drawable.intro_analyze);
         analyze.setBgColor(getResources().getColor(R.color.colorGreen));
         addSlide(AppIntroFragment.newInstance(analyze));
